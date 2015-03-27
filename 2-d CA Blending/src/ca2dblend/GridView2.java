@@ -18,7 +18,7 @@ import java.net.*;
 
 
 
-public class GridView extends JFrame
+public class GridView2 extends JFrame
 {
 	private static final long serialVersionUID = 1L;
 
@@ -38,7 +38,7 @@ public class GridView extends JFrame
      * @param width  The simulation's width.
      */
     
-    public GridView(int height, int width) 
+    public GridView2(int height, int width) 
     {
 
     	
