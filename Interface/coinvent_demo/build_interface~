@@ -1,0 +1,5 @@
+export OCAMLRUNPARAM='s=16M,i=16M'
+
+
+ocamlc -g -I /usr/lib/ocaml/lablgtk2 lablgtk.cma -I /usr/lib/ocaml unix.cma gtkInit.cmo Eval_nats.ml Tester.ml Mutation.ml Interface.ml -o lemology
+
