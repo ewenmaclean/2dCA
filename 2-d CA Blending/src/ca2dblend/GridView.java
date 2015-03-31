@@ -212,7 +212,7 @@ public class GridView extends Applet
         		union = true;
         	}
         	
-        	if (animate && (step <10))
+        	if (animate && (step <300))
         	{
         	step++;
         	aliveButton.setText("Inherit only if Alive.   "+"Step = "+Integer.toString(step));
@@ -231,7 +231,7 @@ public class GridView extends Applet
                 	repaint();
                 
         	} 
-        	else if (animate && (step >=10))
+        	else if (animate && (step >=300))
         			{
         		step =0;
         		animate = false;
