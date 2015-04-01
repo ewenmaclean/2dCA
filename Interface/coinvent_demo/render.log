@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.31)  31 MAR 2015 14:00
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.31)  1 APR 2015 23:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -369,16 +369,17 @@ LaTeX Font Info:    ... okay on input line 4.
 Here is how much of TeX's memory you used:
  1978 strings out of 495028
  15801 string characters out of 6181497
- 64711 words of memory out of 5000000
+ 65711 words of memory out of 5000000
  5188 multiletter control sequences out of 15000+600000
  25643 words of font info for 92 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 23i,4n,17p,210b,209s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texmf/fonts/type1/public/musixtex-fonts/musix20.pfb>
-Output written on /home/ewen/coinvent_demo//render.pdf (1 page, 3695 bytes).
+ 23i,4n,17p,210b,240s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texmf/fonts/type1/public/musixtex-fonts/musix20.pfb><
+/usr/share/texmf/fonts/type1/public/musixtex-fonts/musixspx.pfb>
+Output written on /home/ewen/coinvent_demo//render.pdf (1 page, 6167 bytes).
 PDF statistics:
- 12 PDF objects out of 1000 (max. 8388607)
- 7 compressed objects within 1 object stream
+ 16 PDF objects out of 1000 (max. 8388607)
+ 10 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,5 +1,6 @@
 export OCAMLRUNPARAM='s=16M,i=16M'
 
 
-ocamlc -g -I /usr/lib/ocaml/lablgtk2 lablgtk.cma -I /usr/lib/ocaml unix.cma gtkInit.cmo Eval_nats.ml Tester.ml Mutation.ml Interface.ml -o lemology
+ocamlc -g -I /usr/lib/ocaml/lablgtk2 lablgtk.cma -I /usr/lib/ocaml unix.cma gtkInit.cmo  lablgtksourceview2.cma  Chord.ml Musicparser.mli Musicparser.ml musiclexer.ml Interface.ml -o coinvent
+
 

@@ -1,16 +1,29 @@
 let path_home = Unix.getenv "HOME"
 let path = path_home^"/coinvent_demo/"
 let locale = GtkMain.Main.init ()
+let lang_file = path^"casl.lang"
+let font_name = "Monospace 10"
 let win = GWindow.window ~allow_grow:true ~allow_shrink:true ~border_width:10 ~width:1000 ~height:800 ~title:"CoInvent" ()
 let vbox1 = GPack.vbox ~packing:win#add ()
 
 let clipboard = GData.clipboard Gdk.Atom.clipboard
 let strip_spaces buf = 
   String.trim buf
-
+let r_open_in s = 
+  let ic = open_in s in
+  let size = in_channel_length ic in
+  let buf = String.create size in
+  really_input ic buf 0 size;
+  close_in ic;
+  buf
 let nothing () = ()
 
+
+let run2dca () = 
+  ignore(Unix.system(path^"2dca.jar&"));()
 (* PARSE FOR MUSIC OR MATHEMATICS HERE - CALL PDF *)
+
+
 
 let get_text_from_selected () = 
   let buf2 = clipboard#text  in
@@ -23,18 +36,30 @@ let get_text_from_selected () =
   if (buf3 = "") then () else
   (
    (* CHECK FOR MUSIC ETC *)
-    let musictex = buf3 in
     (* PARSE *)
-    (* WRITE TO FILE *)
-    let oc = open_out (path^"render2.tex") in
-    Printf.fprintf oc "%s" musictex;
+    let lex = Lexing.from_string buf3 in
+    let music = Musicparser.chord1 Musiclexer.token lex in
+    let musictex = 
+    (match Chord.findroot music 
+      with
+      | None ->
+(*needs asking here*)
+	  Chord.calcnotesfromlist 1 (Chord.calcnoteslist 1 music)
+      | Some x ->
+          Chord.calcnotesfromlist x (Chord.calcnoteslist x music))
+    in
+    let pre = r_open_in (path^"render_music_pre.tex") in
+    let post = r_open_in (path^"render_music_post.tex") in
+    let musictexfull = pre^"\n"^musictex^"\n"^post^"\n" in
+    let oc = open_out (path^"render.tex") in
+    Printf.fprintf oc "%s" musictexfull;
     close_out oc;
     (* SEND COMMANDS -- USE TRY HERE *)
     ignore(Unix.system("pdflatex -output-directory "^path^" "^path^"render.tex"));
     ignore(Unix.system("cpdf -scale-page \"5 5\" "^path^"render.pdf -o render2.pdf"));
     ignore(Unix.system("convert -trim "^path^"render2.pdf "^path^"render.jpg")); 
   
-   let w = GWindow.dialog ~modal:true ~height:200 ~width:200 () in
+   let w = GWindow.dialog ~modal:true ~height:500 ~width:700 () in
    let _ = GMisc.image ~file:(path^"render.jpg") ~packing: w#vbox#add () in
   w#show ())
 
@@ -97,7 +122,18 @@ let source_view1 =
     ())
 
 let _ = ignore(source_view1#source_buffer#connect#changed ~callback:(fun () -> source_view1#source_buffer#add_selection_clipboard clipboard))
+ 
+let l = GSourceView2.source_language_manager ~default:true
 
+let lang = l#guess_language ~content_type:"text/casl" () 
+
+let _ = 
+  match lang with
+  | None -> print_endline ("None: "^lang_file)
+  | _ -> print_endline "Some"
+
+
+let _ = ignore(source_view1#source_buffer#set_language lang)
 
 let scrolled_win2 = (GBin.scrolled_window
     ~hpolicy: `AUTOMATIC ~vpolicy: `AUTOMATIC ~packing:vpain_lem_thm#add2
@@ -179,6 +215,9 @@ let create_list_blends choices () =
   scrolled_window#coerce
     
 let add_blends () =
+(*%%% need to call amalgams here*)
+  
+
   let list = create_list_blends [("a","A_TEXT");("b","B_TEXT");("c","C_TEXT")] () in 
   vpain_all#add2 list
 
@@ -232,8 +271,8 @@ let create_menu_theory ~packing () =
   let file_menu = GMenu.menu ~packing () in
   let item = GMenu.menu_item ~label: "Music" ~packing:file_menu#append () in
     ignore (item#connect#activate ~callback:nothing);
-  let item = GMenu.menu_item ~label: "Mathematics" ~packing:file_menu#append () in
-    ignore (item#connect#activate ~callback:nothing)
+  let item = GMenu.menu_item ~label: "Mathematics" ~packing:file_menu#append () in ignore (item#connect#activate ~callback:nothing);
+  let item = GMenu.menu_item ~label: "Cellular Automata" ~packing:file_menu#append () in ignore (item#connect#activate ~callback:run2dca)
 
 let create_menu_actions ~packing () = 
   let file_menu = GMenu.menu ~packing () in

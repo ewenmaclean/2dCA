@@ -1,13 +1,55 @@
-
-
 let path_home = Unix.getenv "HOME"
 let path = path_home^"/coinvent_demo/"
 let locale = GtkMain.Main.init ()
+let lang_file = path^"casl.lang"
+let font_name = "Monospace 10"
 let win = GWindow.window ~allow_grow:true ~allow_shrink:true ~border_width:10 ~width:1000 ~height:800 ~title:"CoInvent" ()
 let vbox1 = GPack.vbox ~packing:win#add ()
 
+let clipboard = GData.clipboard Gdk.Atom.clipboard
+let strip_spaces buf = 
+  String.trim buf
+
 let nothing () = ()
 
+
+let run2dca () = 
+  ignore(Unix.system(path^"2dca.jar&"));()
+(* PARSE FOR MUSIC OR MATHEMATICS HERE - CALL PDF *)
+
+
+
+let get_text_from_selected () = 
+  let buf2 = clipboard#text  in
+  let buf = 
+  (match buf2 with
+    | None -> ""
+    | Some x -> x) 
+  in
+  let buf3 = strip_spaces buf  in
+  if (buf3 = "") then () else
+  (
+   (* CHECK FOR MUSIC ETC *)
+    let musictex = buf3 in
+    (* PARSE *)
+    let lex = Lexing.from_string musictex in
+    print_endline (buf3^" :1");
+    let res = Musicparser.chord1 Musiclexer.token lex in
+    print_endline "2";
+    (* WRITE TO FILE *)
+    let oc = open_out (path^"render2.tex") in
+    Printf.fprintf oc "%s" musictex;
+    close_out oc;
+    (* SEND COMMANDS -- USE TRY HERE *)
+    ignore(Unix.system("pdflatex -output-directory "^path^" "^path^"render.tex"));
+    ignore(Unix.system("cpdf -scale-page \"7 7\" "^path^"render.pdf -o render2.pdf"));
+    ignore(Unix.system("convert -trim "^path^"render2.pdf "^path^"render.jpg")); 
+  
+   let w = GWindow.dialog ~modal:true ~height:300 ~width:300 () in
+   let _ = GMisc.image ~file:(path^"render.jpg") ~packing: w#vbox#add () in
+  w#show ())
+
+  
 
 let xpm_label_box ~file ~text ~packing () =
   if not (Sys.file_exists file) then failwith (file ^ " does not exist");
@@ -65,6 +107,20 @@ let source_view1 =
     ~packing:scrolled_win1#add 
     ())
 
+let _ = ignore(source_view1#source_buffer#connect#changed ~callback:(fun () -> source_view1#source_buffer#add_selection_clipboard clipboard))
+ 
+let l = GSourceView2.source_language_manager ~default:true
+
+let lang = l#guess_language ~content_type:"text/casl" () 
+
+let _ = 
+  match lang with
+  | None -> print_endline ("None: "^lang_file)
+  | _ -> print_endline "Some"
+
+
+let _ = ignore(source_view1#source_buffer#set_language lang)
+
 let scrolled_win2 = (GBin.scrolled_window
     ~hpolicy: `AUTOMATIC ~vpolicy: `AUTOMATIC ~packing:vpain_lem_thm#add2
      ())
@@ -74,6 +130,9 @@ let source_view2 =
     ~width:200 ~height:350
     ~packing:scrolled_win2#add 
     ())
+
+let _ = ignore(source_view2#source_buffer#connect#changed ~callback:(fun () -> source_view2#source_buffer#add_selection_clipboard clipboard))
+
     
 let selection_changed (model:#GTree.model) selection = 
   let pr path = 
@@ -83,7 +142,7 @@ let selection_changed (model:#GTree.model) selection =
   pr (List.hd (selection#get_selected_rows))
     
 let show_new_window t () = 
-  let win2 = GWindow.window ~allow_grow:true ~allow_shrink:true ~border_width:10 ~width:800 ~height:600 ~title:"CoInvent" () in
+  let win2 = GWindow.window ~allow_grow:true ~allow_shrink:true ~border_width:10 ~modal:true ~width:800 ~height:600 ~title:"CoInvent" () in
   let vbox2 = GPack.vbox ~packing:win2#add () in
   let vp = GPack.paned `VERTICAL ~packing:vbox2#add () in
   let vb = GPack.vbox ~packing:vp#add1 () in
@@ -104,9 +163,10 @@ let show_new_window t () =
   (GSourceView2.source_view
     ~width:200 ~height:350
     ~packing:scrolled_winnew#add 
-    ())
+    ()) in
+  let _ = ignore(source_viewnew#source_buffer#connect#changed ~callback:(fun () -> source_viewnew#source_buffer#add_selection_clipboard clipboard))
   in source_viewnew#buffer#set_text t;
-  let _ = button_rendersub#connect#clicked ~callback:(nothing) in
+  let _ = button_rendersub#connect#clicked ~callback:(get_text_from_selected) in
   let _ = button_add#connect#clicked ~callback:(nothing) in
   let _ =button_exit#connect#clicked ~callback:(win2#destroy) in
   win2#show ()
@@ -141,6 +201,9 @@ let create_list_blends choices () =
   scrolled_window#coerce
     
 let add_blends () =
+(*%%% need to call amalgams here*)
+  
+
   let list = create_list_blends [("a","A_TEXT");("b","B_TEXT");("c","C_TEXT")] () in 
   vpain_all#add2 list
 
@@ -185,21 +248,24 @@ let create_menu_options ~packing () =
   let item = GMenu.menu_item ~label: "Search Depth" ~packing:file_menu#append () in
     ignore (item#connect#activate ~callback:nothing);
   let item = GMenu.menu_item ~label: "Generic Space Limit" ~packing:file_menu#append () in
+    ignore (item#connect#activate ~callback:nothing);
+  let item = GMenu.menu_item ~label: "Generic Space Calculator" ~packing:file_menu#append () in
     ignore (item#connect#activate ~callback:nothing)
+
 
 let create_menu_theory ~packing () = 
   let file_menu = GMenu.menu ~packing () in
   let item = GMenu.menu_item ~label: "Music" ~packing:file_menu#append () in
     ignore (item#connect#activate ~callback:nothing);
-  let item = GMenu.menu_item ~label: "Mathematics" ~packing:file_menu#append () in
-    ignore (item#connect#activate ~callback:nothing)
+  let item = GMenu.menu_item ~label: "Mathematics" ~packing:file_menu#append () in ignore (item#connect#activate ~callback:nothing);
+  let item = GMenu.menu_item ~label: "Cellular Automata" ~packing:file_menu#append () in ignore (item#connect#activate ~callback:run2dca)
 
 let create_menu_actions ~packing () = 
   let file_menu = GMenu.menu ~packing () in
   let item = GMenu.menu_item ~label: "Compute Blends" ~packing:file_menu#append () in
     ignore (item#connect#activate ~callback:(add_blends));
   let item = GMenu.menu_item ~label: "Render Selection" ~packing:file_menu#append () in
-    ignore (item#connect#activate ~callback:nothing);
+    ignore (item#connect#activate ~callback:get_text_from_selected);
   let item = GMenu.menu_item ~label: "Manage Theory Group" ~packing:file_menu#append () in
     ignore (item#connect#activate ~callback:nothing)
 
@@ -208,6 +274,7 @@ let create_menu_actions ~packing () =
 let _ = button_open1#connect#clicked ~callback:(open1_file)
 let _ = button_open2#connect#clicked ~callback:(open2_file)
 let _ = button_blend#connect#clicked ~callback:(add_blends)
+let _ = button_render#connect#clicked ~callback:(get_text_from_selected)
 let _ = button_quit#connect#clicked ~callback:(GMain.Main.quit)
 
 
