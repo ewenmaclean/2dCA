@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.31)  1 APR 2015 23:08
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.31)  2 APR 2015 16:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -376,7 +376,7 @@ Here is how much of TeX's memory you used:
  23i,4n,17p,210b,240s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texmf/fonts/type1/public/musixtex-fonts/musix20.pfb><
 /usr/share/texmf/fonts/type1/public/musixtex-fonts/musixspx.pfb>
-Output written on /home/ewen/coinvent_demo//render.pdf (1 page, 6167 bytes).
+Output written on /home/ewen/coinvent_demo//render.pdf (1 page, 6550 bytes).
 PDF statistics:
  16 PDF objects out of 1000 (max. 8388607)
  10 compressed objects within 1 object stream

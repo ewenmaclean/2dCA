@@ -1,0 +1,145 @@
+logic CASL.eCFOL=
+spec Blend =
+sorts Chord, Note
+op 0 : Note
+op 1 : Note
+op 2 : Note
+op 3 : Note
+op 4 : Note
+op 5 : Note
+op 6 : Note
+op 7 : Note
+op 8 : Note
+op 9 : Note
+op __+__ : Note * Note -> Note
+op c : Chord
+op root : Chord -> Note
+op suc : Note -> Note
+op x : Note
+op x1 : Note
+pred hasAbsNote : Chord * Note
+pred hasRelNote : Chord * Note
+
+. hasAbsNote(c, 0) %(Ax-absf0:p:2)%
+
+. hasRelNote(c, 7) %(Ax-relf7:p:2)%
+
+forall c : Chord
+. exists n : Note
+  . root((var c : Chord)) = n /\ hasAbsNote((var c : Chord), n)
+                                %(exOneRootThatMustBePlayed:p:-1)%
+
+forall c : Chord; n : Note
+. hasRelNote((var c : Chord), n)
+  <=> hasAbsNote((var c : Chord), root((var c : Chord)) + n)
+                                            %(reltoabs_note:p:-1)%
+
+forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 7))            %(dis1:p:-1)%
+
+forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 2))
+                                                     %(dis2:p:-1)%
+
+forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 4)
+       /\ hasRelNote((var c : Chord), 4))            %(dis3:p:-1)%
+
+forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 6))                  %(Ax6)%
+
+forall c : Chord
+. not (hasRelNote((var c : Chord), 3)
+       /\ hasRelNote((var c : Chord), 4))
+                                      %(dis_minorMajorThird:p:-1)%
+
+forall c : Chord
+. not (hasRelNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 6))
+                                      %(dis_perfectDimFifth:p:-1)%
+
+forall c : Chord . not hasRelNote((var c : Chord), 1)
+                                               %(dis_second:p:-1)%
+
+forall c : Chord
+. not (hasRelNote((var c : Chord), x)
+       /\ hasRelNote((var c : Chord), 9))
+                                         %(dis_seventhsixth:p:-1)%
+
+generated type
+Note ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | x | x1
+                                             %(ga_generated_Note)%
+
+. suc(0) = 1 %(AxSucc0:p:100:r:0)%
+
+. suc(1) = 2 %(AxSucc1:p:100:r:0)%
+
+. suc(2) = 3 %(AxSucc2:p:100:r:0)%
+
+. suc(3) = 4 %(AxSucc3:p:100:r:0)%
+
+. suc(4) = 5 %(AxSucc4:p:100:r:0)%
+
+. suc(5) = 6 %(AxSucc5:p:100:r:0)%
+
+. suc(6) = 7 %(AxSucc6:p:100:r:0)%
+
+. suc(7) = 8 %(AxSucc7:p:100:r:0)%
+
+. suc(8) = 9 %(AxSucc8:p:100:r:0)%
+
+. suc(9) = x %(AxSucc9:p:100:r:0)%
+
+. suc(x) = x1 %(AxSucc10:p:100:r:0)%
+
+. suc(x1) = 0 %(AxSucc11:p:100:r:0)%
+
+. not 0 = 1 %(Ax14)%
+
+. not 0 = 2 %(Ax15)%
+
+. not 0 = 3 %(Ax16)%
+
+. not 0 = 4 %(Ax17)%
+
+. not 0 = 5 %(Ax18)%
+
+. not 0 = 6 %(Ax19)%
+
+. not 0 = 7 %(Ax20)%
+
+. not 0 = 8 %(Ax21)%
+
+. not 0 = 9 %(Ax22)%
+
+. not 0 = x %(Ax23)%
+
+. not 0 = x1 %(Ax24)%
+
+forall c : Note . suc(c) = 0 <=> (var c : Note) = x1
+                                          %(AxSucc0-11:p:100:r:0)%
+
+forall c, d : Note . suc(c) = suc(d) <=> (var c : Note) = d
+                                           %(AxSuccEql:p:100:r:0)%
+
+forall c : Note . c + 0 = (var c : Note)
+                                      %(AxSuccDontKnow:p:100:r:0)%
+
+forall c, d : Note . c + suc(d) = suc(c + d)
+                                           %(AxSuccAdd:p:100:r:0)%
+
+. hasAbsNote(c, 4) %(Ax-abse4:p:2)%
+
+. hasAbsNote(c, 8) %(Ax-abse8:p:3)%
+
+. hasAbsNote(c, 3) %(Ax-abse3:p:1)%
+
+. root(c) = 4 %(Ax-roote4:p:2)%
+
+. hasRelNote(c, 0) %(Ax-rele0:p:3)%
+
+. hasRelNote(c, 4) %(Ax-rele4:p:3)%
+
+. hasRelNote(c, x1) %(Ax-rele11:p:1)%

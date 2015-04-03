@@ -1,0 +1,8 @@
+\documentclass{article}
+\thispagestyle{empty}
+\usepackage{musixtex}
+\begin{document}
+\begin{music}\nostartrule
+\parindent10mm
+\instrumentnumber{1}
+\setstaffs1{1}

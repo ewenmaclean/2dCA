@@ -1,0 +1,14 @@
+spec Fmin7 = 
+%% F (root) Ab C Eb
+  Chord then
+  op c:Chord
+  . hasAbsNote(c,5)   %(Ax-absf5:p:1)% 
+  . hasAbsNote(c,8)   %(Ax-absf8:p:3)% 
+  . hasAbsNote(c,0)   %(Ax-absf0:p:2)%
+  . hasAbsNote(c,3)   %(Ax-absf3:p:2)%
+  . root(c) = 5       %(Ax-rootf5:p:1)% 
+  . hasRelNote(c,0)   %(Ax-relf0:p:3)%
+  . hasRelNote(c,3)   %(Ax-relf3:p:2)% 
+  . hasRelNote(c,7)   %(Ax-relf7:p:2)%  
+  . hasRelNote(c,x)   %(Ax-relf10:p:1)% 
+end

@@ -1,0 +1,14 @@
+spec Bbmin = 
+%% Bb, C#/Db, F
+  Chord then
+  op c:Chord
+  
+  . hasAbsNote(c,x)  %(Ax-absb10:p:1)%
+  . hasAbsNote(c,1)  %(Ax-absb1:p:3)% 
+  . hasAbsNote(c,5)  %(Ax-absb5:p:2)%  
+  . root(c) = x     %(Ax-rootb10:p:2)%
+  . hasRelNote(c,0)  %(Ax-relb0:p:2)% 
+  . hasRelNote(c,3)  %(Ax-relb3:p:1)% 
+  . hasRelNote(c,7)  %(Ax-relbb7:p:0)% 
+        
+end

@@ -1,0 +1,13 @@
+spec Emaj7 = 
+%% E G#/Ab  D#
+  Chord then
+  op c:Chord
+  
+  . hasAbsNote(c,4)   %(Ax-abse4:p:2)%
+  . hasAbsNote(c,8)   %(Ax-abse8:p:3)%
+  . hasAbsNote(c,3)   %(Ax-abse3:p:1)%
+  . root(c) = 4       %(Ax-roote4:p:2)%
+  . hasRelNote(c,0)   %(Ax-rele0:p:3)%
+  . hasRelNote(c,4)   %(Ax-rele4:p:3)%
+  . hasRelNote(c,x1)  %(Ax-rele11:p:1)% 
+end

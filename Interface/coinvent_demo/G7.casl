@@ -1,0 +1,15 @@
+spec G7 = 
+%% G, B, D, F
+  Chord then
+  op c:Chord
+
+  . hasAbsNote(c,7)  %(Ax-absg7:p:1)%  
+  . hasAbsNote(c,x1) %(Ax-absg11:p:3)% 
+  . hasAbsNote(c,2)  %(Ax-absg2:p:1)%   
+  . hasAbsNote(c,5)  %(Ax-absg5:p:2)%  
+  . root(c) = 7      %(Ax-rootg7:p:1)%  
+  . hasRelNote(c,0)  %(Ax-relg0:p:3)%   
+  . hasRelNote(c,4)  %(Ax-relg4:p:3)%   
+  . hasRelNote(c,7)  %(Ax-relg7:p:0)%   
+  . hasRelNote(c,x)  %(Ax-relg10:p:2)% 
+end

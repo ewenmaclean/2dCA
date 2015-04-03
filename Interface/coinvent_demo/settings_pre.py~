@@ -1,0 +1,8 @@
+###### The number of models to be generated (0 for all models)
+numModels = 10
+
+###### The minimal number of iterations for generalization
+minIterationsGeneralize = 1
+
+###### The maximal number of iterations for generalization
+maxIterationsGeneralize = 20

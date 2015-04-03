@@ -1,0 +1,23 @@
+\documentclass{article}
+\thispagestyle{empty}
+\usepackage{musixtex}
+\begin{document}
+\begin{music}\nostartrule
+\parindent10mm
+\instrumentnumber{1}
+\setstaffs1{1}
+\setclef1\bass
+\startextract
+\Notes 
+
+\ha{g} |\zh{d}\zh{d}\zh{f}\zh{f}\zh{b}\hu{b} &
+
+\enotes
+\Notes 
+ \ha J|\zh c\zh e\hu g & 
+\enotes
+\zendextract
+\end{music}
+
+\end{document}
+
