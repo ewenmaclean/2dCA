@@ -1,0 +1,22 @@
+logic CASL.SulFOL=
+spec SimpleInt =
+sorts SimpleElem, SimplePrime
+sorts SimplePrime < SimpleElem
+op 1 : SimpleElem
+op __x__ : SimpleElem * SimpleElem -> SimpleElem
+pred IsPrime : SimpleElem
+pred __||__ : SimpleElem * SimpleElem
+
+forall x : SimpleElem . x x 1 = x %(ga_right_unit___x__)%
+
+forall x : SimpleElem . 1 x x = x %(ga_left_unit___x__)%
+
+forall x, y : SimpleElem
+. x || y <=> exists c : SimpleElem . x = y x c             %(Ax3)%
+
+forall p : SimpleElem . p in SimplePrime <=> IsPrime(p) %(Ax4)%
+
+forall p : SimpleElem
+. IsPrime(p)
+  <=> (forall a, b : SimpleElem . a x b || p => a || p \/ b || p)
+      /\ not p = 1                                         %(Ax5)%

@@ -1,0 +1,29 @@
+logic CASL.FOAlg=
+
+sorts El, L
+op app : L * L -> L
+op canonical_element : El
+op cons : El * L -> L
+op nil : L
+op plus : L * L -> L
+op qrev : L * L -> L
+op rev : L -> L
+
+forall x : L . app(nil, x) = x %(Ax-AppNilIsId:p:2)%
+
+forall x, y : L; h : El . qrev(cons(h, x), y) = qrev(x, cons(h, y))
+                                                           %(Ax6)%
+
+forall x : L; h : El . not cons(h, x) = nil %(Ax_consNotNil:p:3)%
+
+forall x : L . rev(x) = qrev(x, nil) %(Ax-targetTheoremLists:p:20)%
+
+forall x : L . qrev(nil, x) = x %(Ax-qfactzerozero:p:9)%
+
+forall x : L . not cons(canonical_element, x) = nil
+                                            %(Ax_succNotZero:p:8)%
+
+forall x : L . plus(nil, x) = x %(Ax-zeroPlusEqual:p:5)%
+
+forall x, y : L . app(rev(x), y) = qrev(x, y)
+                                       %(Ax-heurekaLemmaNat:p:20)%

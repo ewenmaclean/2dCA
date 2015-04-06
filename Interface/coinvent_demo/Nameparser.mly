@@ -51,6 +51,7 @@ chord:
 | DOT SUC OPEN INT CLOSE EQUALS INT chord {""}
 | PERCENT OPEN IDENT CLOSE PERCENT chord {""}
 | END {""}
+| IDENT chord {""}
 | EOF {""};
 
 chord1:

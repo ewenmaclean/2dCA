@@ -1,0 +1,18 @@
+spec List = SemSys then
+  sort L
+  sort El
+     op nil : L                
+     op cons : El*L -> L       
+     op app : L * L -> L       
+     op rev : L -> L           
+     op qrev : L * L -> L      
+     forall x,y: L, h : El
+       . app(nil,x) = x                           %(Ax-AppNilIsId:p:2)% 
+       . app(cons(h,x),y) = cons(h,app(x,y))      %(Ax-AppConds:p:2)%
+       . qrev(nil,x) = x                          %(Ax-qrevnilxx:p:4)%
+       . qrev(cons(h,x),y) = qrev(x,cons(h,y))    %(Ax-qrevcons:p:4)%
+       . rev(nil) = nil                           %(Ax-revnil:p:1)%
+       . rev(cons(h,x)) = app(rev(x),cons(h,nil)) %(Ax-revcons:p:3)%
+       . not (cons(h,x) = nil)                    %(Ax_consNotNil:p:3)%
+       . rev(x) = qrev(x,nil)                     %(Ax-targetTheoremLists:p:20)% 
+end

@@ -1,0 +1,938 @@
+spec Generic = 
+	 sort Chord	%%prio:1
+	 sort Note	%%prio:1	(data sort)
+		 op 0 : Note	%%prio:1	(data operator)
+		 op 1 : Note	%%prio:1	(data operator)
+		 op 2 : Note	%%prio:1	(data operator)
+		 op 3 : Note	%%prio:1	(data operator)
+		 op 4 : Note	%%prio:1	(data operator)
+		 op 5 : Note	%%prio:1	(data operator)
+		 op 6 : Note	%%prio:1	(data operator)
+		 op 7 : Note	%%prio:1	(data operator)
+		 op 8 : Note	%%prio:1	(data operator)
+		 op 9 : Note	%%prio:1	(data operator)
+		 op __+__ : Note * Note -> Note	%%prio:1
+		 op c : Chord	%%prio:1
+		 op root : Chord -> Note	%%prio:1
+		 op suc : Note -> Note	%%prio:1
+		 op x : Note	%%prio:1	(data operator)
+		 op x1 : Note	%%prio:1	(data operator)
+		 pred hasAbsNote : Chord * Note   %% prio:1
+		 pred hasRelNote : Chord * Note   %% prio:1
+
+	. hasAbsNote(c, 5)	%(Ax-absb5:p:2)%	%priority(2)%	 %%id:49	eqClass: 3
+	. hasRelNote(c, 0)	%(Ax-relb0:p:2)%	%priority(2)%	 %%id:51	eqClass: 5
+	. hasRelNote(c, 7)	%(Ax-relbb7:p:0)%	%priority(0)%	 %%id:53	eqClass: 7
+	forall c : Chord
+. exists n : Note
+  . root((var c : Chord)) = n /\ hasAbsNote((var c : Chord), n)	%(exOneRootThatMustBePlayed:p:-1)%	%priority(-1)%	 %%id:54	eqClass: 9
+	forall c : Chord; n : Note
+. hasRelNote((var c : Chord), n)
+  <=> hasAbsNote((var c : Chord), root((var c : Chord)) + n)	%(reltoabs_note:p:-1)%	%priority(-1)%	 %%id:55	eqClass: 10
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 7))	%(dis1:p:-1)%	%priority(-1)%	 %%id:56	eqClass: 11
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 2))	%(dis2:p:-1)%	%priority(-1)%	 %%id:57	eqClass: 12
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 4)
+       /\ hasRelNote((var c : Chord), 4))	%(dis3:p:-1)%	%priority(-1)%	 %%id:58	eqClass: 13
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 6))	%(Ax6)%	%priority(1)%	 %%id:59	eqClass: 14
+	forall c : Chord
+. not (hasRelNote((var c : Chord), 3)
+       /\ hasRelNote((var c : Chord), 4))	%(dis_minorMajorThird:p:-1)%	%priority(-1)%	 %%id:60	eqClass: 15
+	forall c : Chord
+. not (hasRelNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 6))	%(dis_perfectDimFifth:p:-1)%	%priority(-1)%	 %%id:61	eqClass: 16
+	forall c : Chord . not hasRelNote((var c : Chord), 1)	%(dis_second:p:-1)%	%priority(-1)%	 %%id:62	eqClass: 17
+	forall c : Chord
+. not (hasRelNote((var c : Chord), x)
+       /\ hasRelNote((var c : Chord), 9))	%(dis_seventhsixth:p:-1)%	%priority(-1)%	 %%id:63	eqClass: 18
+	generated type
+Note ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | x | x1	%(ga_generated_Note)%	%priority(1)%	 %%id:64	eqClass: 19	(data axiom)
+	. suc(0) = 1	%(AxSucc0:p:100:r:0)%	%priority(100)%	 %%id:65	eqClass: 20
+	. suc(1) = 2	%(AxSucc1:p:100:r:0)%	%priority(100)%	 %%id:66	eqClass: 21
+	. suc(2) = 3	%(AxSucc2:p:100:r:0)%	%priority(100)%	 %%id:67	eqClass: 22
+	. suc(3) = 4	%(AxSucc3:p:100:r:0)%	%priority(100)%	 %%id:68	eqClass: 23
+	. suc(4) = 5	%(AxSucc4:p:100:r:0)%	%priority(100)%	 %%id:69	eqClass: 24
+	. suc(5) = 6	%(AxSucc5:p:100:r:0)%	%priority(100)%	 %%id:70	eqClass: 25
+	. suc(6) = 7	%(AxSucc6:p:100:r:0)%	%priority(100)%	 %%id:71	eqClass: 26
+	. suc(7) = 8	%(AxSucc7:p:100:r:0)%	%priority(100)%	 %%id:72	eqClass: 27
+	. suc(8) = 9	%(AxSucc8:p:100:r:0)%	%priority(100)%	 %%id:73	eqClass: 28
+	. suc(9) = x	%(AxSucc9:p:100:r:0)%	%priority(100)%	 %%id:74	eqClass: 29
+	. suc(x) = x1	%(AxSucc10:p:100:r:0)%	%priority(100)%	 %%id:75	eqClass: 30
+	. suc(x1) = 0	%(AxSucc11:p:100:r:0)%	%priority(100)%	 %%id:76	eqClass: 31
+	. not 0 = 1	%(Ax14)%	%priority(1)%	 %%id:77	eqClass: 32	(data axiom)
+	. not 0 = 2	%(Ax15)%	%priority(1)%	 %%id:78	eqClass: 33	(data axiom)
+	. not 0 = 3	%(Ax16)%	%priority(1)%	 %%id:79	eqClass: 34	(data axiom)
+	. not 0 = 4	%(Ax17)%	%priority(1)%	 %%id:80	eqClass: 35	(data axiom)
+	. not 0 = 5	%(Ax18)%	%priority(1)%	 %%id:81	eqClass: 36	(data axiom)
+	. not 0 = 6	%(Ax19)%	%priority(1)%	 %%id:82	eqClass: 37	(data axiom)
+	. not 0 = 7	%(Ax20)%	%priority(1)%	 %%id:83	eqClass: 38	(data axiom)
+	. not 0 = 8	%(Ax21)%	%priority(1)%	 %%id:84	eqClass: 39	(data axiom)
+	. not 0 = 9	%(Ax22)%	%priority(1)%	 %%id:85	eqClass: 40	(data axiom)
+	. not 0 = x	%(Ax23)%	%priority(1)%	 %%id:86	eqClass: 41	(data axiom)
+	. not 0 = x1	%(Ax24)%	%priority(1)%	 %%id:87	eqClass: 42	(data axiom)
+	forall c : Note . suc(c) = 0 <=> (var c : Note) = x1	%(AxSucc0-11:p:100:r:0)%	%priority(100)%	 %%id:88	eqClass: 43
+	forall c, d : Note . suc(c) = suc(d) <=> (var c : Note) = d	%(AxSuccEql:p:100:r:0)%	%priority(100)%	 %%id:89	eqClass: 44
+	forall c : Note . c + 0 = (var c : Note)	%(AxSuccDontKnow:p:100:r:0)%	%priority(100)%	 %%id:90	eqClass: 45
+	forall c, d : Note . c + suc(d) = suc(c + d)	%(AxSuccAdd:p:100:r:0)%	%priority(100)%	 %%id:91	eqClass: 46
+end
+
+spec G7 = 
+	 sort Chord	%%prio:1
+	 sort Note	%%prio:1	(data sort)
+		 op 0 : Note	%%prio:1	(data operator)
+		 op 1 : Note	%%prio:1	(data operator)
+		 op 2 : Note	%%prio:1	(data operator)
+		 op 3 : Note	%%prio:1	(data operator)
+		 op 4 : Note	%%prio:1	(data operator)
+		 op 5 : Note	%%prio:1	(data operator)
+		 op 6 : Note	%%prio:1	(data operator)
+		 op 7 : Note	%%prio:1	(data operator)
+		 op 8 : Note	%%prio:1	(data operator)
+		 op 9 : Note	%%prio:1	(data operator)
+		 op __+__ : Note * Note -> Note	%%prio:1
+		 op c : Chord	%%prio:1
+		 op root : Chord -> Note	%%prio:1
+		 op suc : Note -> Note	%%prio:1
+		 op x : Note	%%prio:1	(data operator)
+		 op x1 : Note	%%prio:1	(data operator)
+		 pred hasAbsNote : Chord * Note   %% prio:1
+		 pred hasRelNote : Chord * Note   %% prio:1
+
+	. hasAbsNote(c, 7)	%(Ax-absg7:p:1)%	%priority(1)%	 %%id:0	eqClass: 0
+	. hasAbsNote(c, x1)	%(Ax-absg11:p:3)%	%priority(3)%	 %%id:1	eqClass: 1
+	. hasAbsNote(c, 2)	%(Ax-absg2:p:1)%	%priority(1)%	 %%id:2	eqClass: 2
+	. hasAbsNote(c, 5)	%(Ax-absg5:p:2)%	%priority(2)%	 %%id:3	eqClass: 3
+	. root(c) = 7	%(Ax-rootg7:p:1)%	%priority(1)%	 %%id:4	eqClass: 4
+	. hasRelNote(c, 0)	%(Ax-relg0:p:3)%	%priority(3)%	 %%id:5	eqClass: 5
+	. hasRelNote(c, 4)	%(Ax-relg4:p:3)%	%priority(3)%	 %%id:6	eqClass: 6
+	. hasRelNote(c, 7)	%(Ax-relg7:p:0)%	%priority(0)%	 %%id:7	eqClass: 7
+	. hasRelNote(c, x)	%(Ax-relg10:p:2)%	%priority(2)%	 %%id:8	eqClass: 8
+	forall c : Chord
+. exists n : Note
+  . root((var c : Chord)) = n /\ hasAbsNote((var c : Chord), n)	%(exOneRootThatMustBePlayed:p:-1)%	%priority(-1)%	 %%id:9	eqClass: 9
+	forall c : Chord; n : Note
+. hasRelNote((var c : Chord), n)
+  <=> hasAbsNote((var c : Chord), root((var c : Chord)) + n)	%(reltoabs_note:p:-1)%	%priority(-1)%	 %%id:10	eqClass: 10
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 7))	%(dis1:p:-1)%	%priority(-1)%	 %%id:11	eqClass: 11
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 2))	%(dis2:p:-1)%	%priority(-1)%	 %%id:12	eqClass: 12
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 4)
+       /\ hasRelNote((var c : Chord), 4))	%(dis3:p:-1)%	%priority(-1)%	 %%id:13	eqClass: 13
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 6))	%(Ax6)%	%priority(1)%	 %%id:14	eqClass: 14
+	forall c : Chord
+. not (hasRelNote((var c : Chord), 3)
+       /\ hasRelNote((var c : Chord), 4))	%(dis_minorMajorThird:p:-1)%	%priority(-1)%	 %%id:15	eqClass: 15
+	forall c : Chord
+. not (hasRelNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 6))	%(dis_perfectDimFifth:p:-1)%	%priority(-1)%	 %%id:16	eqClass: 16
+	forall c : Chord . not hasRelNote((var c : Chord), 1)	%(dis_second:p:-1)%	%priority(-1)%	 %%id:17	eqClass: 17
+	forall c : Chord
+. not (hasRelNote((var c : Chord), x)
+       /\ hasRelNote((var c : Chord), 9))	%(dis_seventhsixth:p:-1)%	%priority(-1)%	 %%id:18	eqClass: 18
+	generated type
+Note ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | x | x1	%(ga_generated_Note)%	%priority(1)%	 %%id:19	eqClass: 19	(data axiom)
+	. suc(0) = 1	%(AxSucc0:p:100:r:0)%	%priority(100)%	 %%id:20	eqClass: 20
+	. suc(1) = 2	%(AxSucc1:p:100:r:0)%	%priority(100)%	 %%id:21	eqClass: 21
+	. suc(2) = 3	%(AxSucc2:p:100:r:0)%	%priority(100)%	 %%id:22	eqClass: 22
+	. suc(3) = 4	%(AxSucc3:p:100:r:0)%	%priority(100)%	 %%id:23	eqClass: 23
+	. suc(4) = 5	%(AxSucc4:p:100:r:0)%	%priority(100)%	 %%id:24	eqClass: 24
+	. suc(5) = 6	%(AxSucc5:p:100:r:0)%	%priority(100)%	 %%id:25	eqClass: 25
+	. suc(6) = 7	%(AxSucc6:p:100:r:0)%	%priority(100)%	 %%id:26	eqClass: 26
+	. suc(7) = 8	%(AxSucc7:p:100:r:0)%	%priority(100)%	 %%id:27	eqClass: 27
+	. suc(8) = 9	%(AxSucc8:p:100:r:0)%	%priority(100)%	 %%id:28	eqClass: 28
+	. suc(9) = x	%(AxSucc9:p:100:r:0)%	%priority(100)%	 %%id:29	eqClass: 29
+	. suc(x) = x1	%(AxSucc10:p:100:r:0)%	%priority(100)%	 %%id:30	eqClass: 30
+	. suc(x1) = 0	%(AxSucc11:p:100:r:0)%	%priority(100)%	 %%id:31	eqClass: 31
+	. not 0 = 1	%(Ax14)%	%priority(1)%	 %%id:32	eqClass: 32	(data axiom)
+	. not 0 = 2	%(Ax15)%	%priority(1)%	 %%id:33	eqClass: 33	(data axiom)
+	. not 0 = 3	%(Ax16)%	%priority(1)%	 %%id:34	eqClass: 34	(data axiom)
+	. not 0 = 4	%(Ax17)%	%priority(1)%	 %%id:35	eqClass: 35	(data axiom)
+	. not 0 = 5	%(Ax18)%	%priority(1)%	 %%id:36	eqClass: 36	(data axiom)
+	. not 0 = 6	%(Ax19)%	%priority(1)%	 %%id:37	eqClass: 37	(data axiom)
+	. not 0 = 7	%(Ax20)%	%priority(1)%	 %%id:38	eqClass: 38	(data axiom)
+	. not 0 = 8	%(Ax21)%	%priority(1)%	 %%id:39	eqClass: 39	(data axiom)
+	. not 0 = 9	%(Ax22)%	%priority(1)%	 %%id:40	eqClass: 40	(data axiom)
+	. not 0 = x	%(Ax23)%	%priority(1)%	 %%id:41	eqClass: 41	(data axiom)
+	. not 0 = x1	%(Ax24)%	%priority(1)%	 %%id:42	eqClass: 42	(data axiom)
+	forall c : Note . suc(c) = 0 <=> (var c : Note) = x1	%(AxSucc0-11:p:100:r:0)%	%priority(100)%	 %%id:43	eqClass: 43
+	forall c, d : Note . suc(c) = suc(d) <=> (var c : Note) = d	%(AxSuccEql:p:100:r:0)%	%priority(100)%	 %%id:44	eqClass: 44
+	forall c : Note . c + 0 = (var c : Note)	%(AxSuccDontKnow:p:100:r:0)%	%priority(100)%	 %%id:45	eqClass: 45
+	forall c, d : Note . c + suc(d) = suc(c + d)	%(AxSuccAdd:p:100:r:0)%	%priority(100)%	 %%id:46	eqClass: 46
+end
+
+spec G7_gen_1 = 
+	 sort Chord	%%prio:1
+	 sort Note	%%prio:1	(data sort)
+		 op 0 : Note	%%prio:1	(data operator)
+		 op 1 : Note	%%prio:1	(data operator)
+		 op 2 : Note	%%prio:1	(data operator)
+		 op 3 : Note	%%prio:1	(data operator)
+		 op 4 : Note	%%prio:1	(data operator)
+		 op 5 : Note	%%prio:1	(data operator)
+		 op 6 : Note	%%prio:1	(data operator)
+		 op 7 : Note	%%prio:1	(data operator)
+		 op 8 : Note	%%prio:1	(data operator)
+		 op 9 : Note	%%prio:1	(data operator)
+		 op __+__ : Note * Note -> Note	%%prio:1
+		 op c : Chord	%%prio:1
+		 op root : Chord -> Note	%%prio:1
+		 op suc : Note -> Note	%%prio:1
+		 op x : Note	%%prio:1	(data operator)
+		 op x1 : Note	%%prio:1	(data operator)
+		 pred hasAbsNote : Chord * Note   %% prio:1
+		 pred hasRelNote : Chord * Note   %% prio:1
+
+	. hasAbsNote(c, 7)	%(Ax-absg7:p:1)%	%priority(1)%	 %%id:0	eqClass: 0
+	. hasAbsNote(c, x1)	%(Ax-absg11:p:3)%	%priority(3)%	 %%id:1	eqClass: 1
+	. hasAbsNote(c, 2)	%(Ax-absg2:p:1)%	%priority(1)%	 %%id:2	eqClass: 2
+	. hasAbsNote(c, 5)	%(Ax-absg5:p:2)%	%priority(2)%	 %%id:3	eqClass: 3
+	. hasRelNote(c, 0)	%(Ax-relg0:p:3)%	%priority(3)%	 %%id:5	eqClass: 5
+	. hasRelNote(c, 4)	%(Ax-relg4:p:3)%	%priority(3)%	 %%id:6	eqClass: 6
+	. hasRelNote(c, 7)	%(Ax-relg7:p:0)%	%priority(0)%	 %%id:7	eqClass: 7
+	. hasRelNote(c, x)	%(Ax-relg10:p:2)%	%priority(2)%	 %%id:8	eqClass: 8
+	forall c : Chord
+. exists n : Note
+  . root((var c : Chord)) = n /\ hasAbsNote((var c : Chord), n)	%(exOneRootThatMustBePlayed:p:-1)%	%priority(-1)%	 %%id:9	eqClass: 9
+	forall c : Chord; n : Note
+. hasRelNote((var c : Chord), n)
+  <=> hasAbsNote((var c : Chord), root((var c : Chord)) + n)	%(reltoabs_note:p:-1)%	%priority(-1)%	 %%id:10	eqClass: 10
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 7))	%(dis1:p:-1)%	%priority(-1)%	 %%id:11	eqClass: 11
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 2))	%(dis2:p:-1)%	%priority(-1)%	 %%id:12	eqClass: 12
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 4)
+       /\ hasRelNote((var c : Chord), 4))	%(dis3:p:-1)%	%priority(-1)%	 %%id:13	eqClass: 13
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 6))	%(Ax6)%	%priority(1)%	 %%id:14	eqClass: 14
+	forall c : Chord
+. not (hasRelNote((var c : Chord), 3)
+       /\ hasRelNote((var c : Chord), 4))	%(dis_minorMajorThird:p:-1)%	%priority(-1)%	 %%id:15	eqClass: 15
+	forall c : Chord
+. not (hasRelNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 6))	%(dis_perfectDimFifth:p:-1)%	%priority(-1)%	 %%id:16	eqClass: 16
+	forall c : Chord . not hasRelNote((var c : Chord), 1)	%(dis_second:p:-1)%	%priority(-1)%	 %%id:17	eqClass: 17
+	forall c : Chord
+. not (hasRelNote((var c : Chord), x)
+       /\ hasRelNote((var c : Chord), 9))	%(dis_seventhsixth:p:-1)%	%priority(-1)%	 %%id:18	eqClass: 18
+	generated type
+Note ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | x | x1	%(ga_generated_Note)%	%priority(1)%	 %%id:19	eqClass: 19	(data axiom)
+	. suc(0) = 1	%(AxSucc0:p:100:r:0)%	%priority(100)%	 %%id:20	eqClass: 20
+	. suc(1) = 2	%(AxSucc1:p:100:r:0)%	%priority(100)%	 %%id:21	eqClass: 21
+	. suc(2) = 3	%(AxSucc2:p:100:r:0)%	%priority(100)%	 %%id:22	eqClass: 22
+	. suc(3) = 4	%(AxSucc3:p:100:r:0)%	%priority(100)%	 %%id:23	eqClass: 23
+	. suc(4) = 5	%(AxSucc4:p:100:r:0)%	%priority(100)%	 %%id:24	eqClass: 24
+	. suc(5) = 6	%(AxSucc5:p:100:r:0)%	%priority(100)%	 %%id:25	eqClass: 25
+	. suc(6) = 7	%(AxSucc6:p:100:r:0)%	%priority(100)%	 %%id:26	eqClass: 26
+	. suc(7) = 8	%(AxSucc7:p:100:r:0)%	%priority(100)%	 %%id:27	eqClass: 27
+	. suc(8) = 9	%(AxSucc8:p:100:r:0)%	%priority(100)%	 %%id:28	eqClass: 28
+	. suc(9) = x	%(AxSucc9:p:100:r:0)%	%priority(100)%	 %%id:29	eqClass: 29
+	. suc(x) = x1	%(AxSucc10:p:100:r:0)%	%priority(100)%	 %%id:30	eqClass: 30
+	. suc(x1) = 0	%(AxSucc11:p:100:r:0)%	%priority(100)%	 %%id:31	eqClass: 31
+	. not 0 = 1	%(Ax14)%	%priority(1)%	 %%id:32	eqClass: 32	(data axiom)
+	. not 0 = 2	%(Ax15)%	%priority(1)%	 %%id:33	eqClass: 33	(data axiom)
+	. not 0 = 3	%(Ax16)%	%priority(1)%	 %%id:34	eqClass: 34	(data axiom)
+	. not 0 = 4	%(Ax17)%	%priority(1)%	 %%id:35	eqClass: 35	(data axiom)
+	. not 0 = 5	%(Ax18)%	%priority(1)%	 %%id:36	eqClass: 36	(data axiom)
+	. not 0 = 6	%(Ax19)%	%priority(1)%	 %%id:37	eqClass: 37	(data axiom)
+	. not 0 = 7	%(Ax20)%	%priority(1)%	 %%id:38	eqClass: 38	(data axiom)
+	. not 0 = 8	%(Ax21)%	%priority(1)%	 %%id:39	eqClass: 39	(data axiom)
+	. not 0 = 9	%(Ax22)%	%priority(1)%	 %%id:40	eqClass: 40	(data axiom)
+	. not 0 = x	%(Ax23)%	%priority(1)%	 %%id:41	eqClass: 41	(data axiom)
+	. not 0 = x1	%(Ax24)%	%priority(1)%	 %%id:42	eqClass: 42	(data axiom)
+	forall c : Note . suc(c) = 0 <=> (var c : Note) = x1	%(AxSucc0-11:p:100:r:0)%	%priority(100)%	 %%id:43	eqClass: 43
+	forall c, d : Note . suc(c) = suc(d) <=> (var c : Note) = d	%(AxSuccEql:p:100:r:0)%	%priority(100)%	 %%id:44	eqClass: 44
+	forall c : Note . c + 0 = (var c : Note)	%(AxSuccDontKnow:p:100:r:0)%	%priority(100)%	 %%id:45	eqClass: 45
+	forall c, d : Note . c + suc(d) = suc(c + d)	%(AxSuccAdd:p:100:r:0)%	%priority(100)%	 %%id:46	eqClass: 46
+end
+
+view G7_gen_1ToG7 : G7_gen_1 to G7 end 
+
+spec G7_gen_2 = 
+	 sort Chord	%%prio:1
+	 sort Note	%%prio:1	(data sort)
+		 op 0 : Note	%%prio:1	(data operator)
+		 op 1 : Note	%%prio:1	(data operator)
+		 op 2 : Note	%%prio:1	(data operator)
+		 op 3 : Note	%%prio:1	(data operator)
+		 op 4 : Note	%%prio:1	(data operator)
+		 op 5 : Note	%%prio:1	(data operator)
+		 op 6 : Note	%%prio:1	(data operator)
+		 op 7 : Note	%%prio:1	(data operator)
+		 op 8 : Note	%%prio:1	(data operator)
+		 op 9 : Note	%%prio:1	(data operator)
+		 op __+__ : Note * Note -> Note	%%prio:1
+		 op c : Chord	%%prio:1
+		 op root : Chord -> Note	%%prio:1
+		 op suc : Note -> Note	%%prio:1
+		 op x : Note	%%prio:1	(data operator)
+		 op x1 : Note	%%prio:1	(data operator)
+		 pred hasAbsNote : Chord * Note   %% prio:1
+		 pred hasRelNote : Chord * Note   %% prio:1
+
+	. hasAbsNote(c, 7)	%(Ax-absg7:p:1)%	%priority(1)%	 %%id:0	eqClass: 0
+	. hasAbsNote(c, x1)	%(Ax-absg11:p:3)%	%priority(3)%	 %%id:1	eqClass: 1
+	. hasAbsNote(c, 5)	%(Ax-absg5:p:2)%	%priority(2)%	 %%id:3	eqClass: 3
+	. hasRelNote(c, 0)	%(Ax-relg0:p:3)%	%priority(3)%	 %%id:5	eqClass: 5
+	. hasRelNote(c, 4)	%(Ax-relg4:p:3)%	%priority(3)%	 %%id:6	eqClass: 6
+	. hasRelNote(c, 7)	%(Ax-relg7:p:0)%	%priority(0)%	 %%id:7	eqClass: 7
+	. hasRelNote(c, x)	%(Ax-relg10:p:2)%	%priority(2)%	 %%id:8	eqClass: 8
+	forall c : Chord
+. exists n : Note
+  . root((var c : Chord)) = n /\ hasAbsNote((var c : Chord), n)	%(exOneRootThatMustBePlayed:p:-1)%	%priority(-1)%	 %%id:9	eqClass: 9
+	forall c : Chord; n : Note
+. hasRelNote((var c : Chord), n)
+  <=> hasAbsNote((var c : Chord), root((var c : Chord)) + n)	%(reltoabs_note:p:-1)%	%priority(-1)%	 %%id:10	eqClass: 10
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 7))	%(dis1:p:-1)%	%priority(-1)%	 %%id:11	eqClass: 11
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 2))	%(dis2:p:-1)%	%priority(-1)%	 %%id:12	eqClass: 12
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 4)
+       /\ hasRelNote((var c : Chord), 4))	%(dis3:p:-1)%	%priority(-1)%	 %%id:13	eqClass: 13
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 6))	%(Ax6)%	%priority(1)%	 %%id:14	eqClass: 14
+	forall c : Chord
+. not (hasRelNote((var c : Chord), 3)
+       /\ hasRelNote((var c : Chord), 4))	%(dis_minorMajorThird:p:-1)%	%priority(-1)%	 %%id:15	eqClass: 15
+	forall c : Chord
+. not (hasRelNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 6))	%(dis_perfectDimFifth:p:-1)%	%priority(-1)%	 %%id:16	eqClass: 16
+	forall c : Chord . not hasRelNote((var c : Chord), 1)	%(dis_second:p:-1)%	%priority(-1)%	 %%id:17	eqClass: 17
+	forall c : Chord
+. not (hasRelNote((var c : Chord), x)
+       /\ hasRelNote((var c : Chord), 9))	%(dis_seventhsixth:p:-1)%	%priority(-1)%	 %%id:18	eqClass: 18
+	generated type
+Note ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | x | x1	%(ga_generated_Note)%	%priority(1)%	 %%id:19	eqClass: 19	(data axiom)
+	. suc(0) = 1	%(AxSucc0:p:100:r:0)%	%priority(100)%	 %%id:20	eqClass: 20
+	. suc(1) = 2	%(AxSucc1:p:100:r:0)%	%priority(100)%	 %%id:21	eqClass: 21
+	. suc(2) = 3	%(AxSucc2:p:100:r:0)%	%priority(100)%	 %%id:22	eqClass: 22
+	. suc(3) = 4	%(AxSucc3:p:100:r:0)%	%priority(100)%	 %%id:23	eqClass: 23
+	. suc(4) = 5	%(AxSucc4:p:100:r:0)%	%priority(100)%	 %%id:24	eqClass: 24
+	. suc(5) = 6	%(AxSucc5:p:100:r:0)%	%priority(100)%	 %%id:25	eqClass: 25
+	. suc(6) = 7	%(AxSucc6:p:100:r:0)%	%priority(100)%	 %%id:26	eqClass: 26
+	. suc(7) = 8	%(AxSucc7:p:100:r:0)%	%priority(100)%	 %%id:27	eqClass: 27
+	. suc(8) = 9	%(AxSucc8:p:100:r:0)%	%priority(100)%	 %%id:28	eqClass: 28
+	. suc(9) = x	%(AxSucc9:p:100:r:0)%	%priority(100)%	 %%id:29	eqClass: 29
+	. suc(x) = x1	%(AxSucc10:p:100:r:0)%	%priority(100)%	 %%id:30	eqClass: 30
+	. suc(x1) = 0	%(AxSucc11:p:100:r:0)%	%priority(100)%	 %%id:31	eqClass: 31
+	. not 0 = 1	%(Ax14)%	%priority(1)%	 %%id:32	eqClass: 32	(data axiom)
+	. not 0 = 2	%(Ax15)%	%priority(1)%	 %%id:33	eqClass: 33	(data axiom)
+	. not 0 = 3	%(Ax16)%	%priority(1)%	 %%id:34	eqClass: 34	(data axiom)
+	. not 0 = 4	%(Ax17)%	%priority(1)%	 %%id:35	eqClass: 35	(data axiom)
+	. not 0 = 5	%(Ax18)%	%priority(1)%	 %%id:36	eqClass: 36	(data axiom)
+	. not 0 = 6	%(Ax19)%	%priority(1)%	 %%id:37	eqClass: 37	(data axiom)
+	. not 0 = 7	%(Ax20)%	%priority(1)%	 %%id:38	eqClass: 38	(data axiom)
+	. not 0 = 8	%(Ax21)%	%priority(1)%	 %%id:39	eqClass: 39	(data axiom)
+	. not 0 = 9	%(Ax22)%	%priority(1)%	 %%id:40	eqClass: 40	(data axiom)
+	. not 0 = x	%(Ax23)%	%priority(1)%	 %%id:41	eqClass: 41	(data axiom)
+	. not 0 = x1	%(Ax24)%	%priority(1)%	 %%id:42	eqClass: 42	(data axiom)
+	forall c : Note . suc(c) = 0 <=> (var c : Note) = x1	%(AxSucc0-11:p:100:r:0)%	%priority(100)%	 %%id:43	eqClass: 43
+	forall c, d : Note . suc(c) = suc(d) <=> (var c : Note) = d	%(AxSuccEql:p:100:r:0)%	%priority(100)%	 %%id:44	eqClass: 44
+	forall c : Note . c + 0 = (var c : Note)	%(AxSuccDontKnow:p:100:r:0)%	%priority(100)%	 %%id:45	eqClass: 45
+	forall c, d : Note . c + suc(d) = suc(c + d)	%(AxSuccAdd:p:100:r:0)%	%priority(100)%	 %%id:46	eqClass: 46
+end
+
+view G7_gen_2ToG7_gen_1 : G7_gen_2 to G7_gen_1 end 
+
+spec G7_gen_3 = 
+	 sort Chord	%%prio:1
+	 sort Note	%%prio:1	(data sort)
+		 op 0 : Note	%%prio:1	(data operator)
+		 op 1 : Note	%%prio:1	(data operator)
+		 op 2 : Note	%%prio:1	(data operator)
+		 op 3 : Note	%%prio:1	(data operator)
+		 op 4 : Note	%%prio:1	(data operator)
+		 op 5 : Note	%%prio:1	(data operator)
+		 op 6 : Note	%%prio:1	(data operator)
+		 op 7 : Note	%%prio:1	(data operator)
+		 op 8 : Note	%%prio:1	(data operator)
+		 op 9 : Note	%%prio:1	(data operator)
+		 op __+__ : Note * Note -> Note	%%prio:1
+		 op c : Chord	%%prio:1
+		 op root : Chord -> Note	%%prio:1
+		 op suc : Note -> Note	%%prio:1
+		 op x : Note	%%prio:1	(data operator)
+		 op x1 : Note	%%prio:1	(data operator)
+		 pred hasAbsNote : Chord * Note   %% prio:1
+		 pred hasRelNote : Chord * Note   %% prio:1
+
+	. hasAbsNote(c, x1)	%(Ax-absg11:p:3)%	%priority(3)%	 %%id:1	eqClass: 1
+	. hasAbsNote(c, 5)	%(Ax-absg5:p:2)%	%priority(2)%	 %%id:3	eqClass: 3
+	. hasRelNote(c, 0)	%(Ax-relg0:p:3)%	%priority(3)%	 %%id:5	eqClass: 5
+	. hasRelNote(c, 4)	%(Ax-relg4:p:3)%	%priority(3)%	 %%id:6	eqClass: 6
+	. hasRelNote(c, 7)	%(Ax-relg7:p:0)%	%priority(0)%	 %%id:7	eqClass: 7
+	. hasRelNote(c, x)	%(Ax-relg10:p:2)%	%priority(2)%	 %%id:8	eqClass: 8
+	forall c : Chord
+. exists n : Note
+  . root((var c : Chord)) = n /\ hasAbsNote((var c : Chord), n)	%(exOneRootThatMustBePlayed:p:-1)%	%priority(-1)%	 %%id:9	eqClass: 9
+	forall c : Chord; n : Note
+. hasRelNote((var c : Chord), n)
+  <=> hasAbsNote((var c : Chord), root((var c : Chord)) + n)	%(reltoabs_note:p:-1)%	%priority(-1)%	 %%id:10	eqClass: 10
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 7))	%(dis1:p:-1)%	%priority(-1)%	 %%id:11	eqClass: 11
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 2))	%(dis2:p:-1)%	%priority(-1)%	 %%id:12	eqClass: 12
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 4)
+       /\ hasRelNote((var c : Chord), 4))	%(dis3:p:-1)%	%priority(-1)%	 %%id:13	eqClass: 13
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 6))	%(Ax6)%	%priority(1)%	 %%id:14	eqClass: 14
+	forall c : Chord
+. not (hasRelNote((var c : Chord), 3)
+       /\ hasRelNote((var c : Chord), 4))	%(dis_minorMajorThird:p:-1)%	%priority(-1)%	 %%id:15	eqClass: 15
+	forall c : Chord
+. not (hasRelNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 6))	%(dis_perfectDimFifth:p:-1)%	%priority(-1)%	 %%id:16	eqClass: 16
+	forall c : Chord . not hasRelNote((var c : Chord), 1)	%(dis_second:p:-1)%	%priority(-1)%	 %%id:17	eqClass: 17
+	forall c : Chord
+. not (hasRelNote((var c : Chord), x)
+       /\ hasRelNote((var c : Chord), 9))	%(dis_seventhsixth:p:-1)%	%priority(-1)%	 %%id:18	eqClass: 18
+	generated type
+Note ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | x | x1	%(ga_generated_Note)%	%priority(1)%	 %%id:19	eqClass: 19	(data axiom)
+	. suc(0) = 1	%(AxSucc0:p:100:r:0)%	%priority(100)%	 %%id:20	eqClass: 20
+	. suc(1) = 2	%(AxSucc1:p:100:r:0)%	%priority(100)%	 %%id:21	eqClass: 21
+	. suc(2) = 3	%(AxSucc2:p:100:r:0)%	%priority(100)%	 %%id:22	eqClass: 22
+	. suc(3) = 4	%(AxSucc3:p:100:r:0)%	%priority(100)%	 %%id:23	eqClass: 23
+	. suc(4) = 5	%(AxSucc4:p:100:r:0)%	%priority(100)%	 %%id:24	eqClass: 24
+	. suc(5) = 6	%(AxSucc5:p:100:r:0)%	%priority(100)%	 %%id:25	eqClass: 25
+	. suc(6) = 7	%(AxSucc6:p:100:r:0)%	%priority(100)%	 %%id:26	eqClass: 26
+	. suc(7) = 8	%(AxSucc7:p:100:r:0)%	%priority(100)%	 %%id:27	eqClass: 27
+	. suc(8) = 9	%(AxSucc8:p:100:r:0)%	%priority(100)%	 %%id:28	eqClass: 28
+	. suc(9) = x	%(AxSucc9:p:100:r:0)%	%priority(100)%	 %%id:29	eqClass: 29
+	. suc(x) = x1	%(AxSucc10:p:100:r:0)%	%priority(100)%	 %%id:30	eqClass: 30
+	. suc(x1) = 0	%(AxSucc11:p:100:r:0)%	%priority(100)%	 %%id:31	eqClass: 31
+	. not 0 = 1	%(Ax14)%	%priority(1)%	 %%id:32	eqClass: 32	(data axiom)
+	. not 0 = 2	%(Ax15)%	%priority(1)%	 %%id:33	eqClass: 33	(data axiom)
+	. not 0 = 3	%(Ax16)%	%priority(1)%	 %%id:34	eqClass: 34	(data axiom)
+	. not 0 = 4	%(Ax17)%	%priority(1)%	 %%id:35	eqClass: 35	(data axiom)
+	. not 0 = 5	%(Ax18)%	%priority(1)%	 %%id:36	eqClass: 36	(data axiom)
+	. not 0 = 6	%(Ax19)%	%priority(1)%	 %%id:37	eqClass: 37	(data axiom)
+	. not 0 = 7	%(Ax20)%	%priority(1)%	 %%id:38	eqClass: 38	(data axiom)
+	. not 0 = 8	%(Ax21)%	%priority(1)%	 %%id:39	eqClass: 39	(data axiom)
+	. not 0 = 9	%(Ax22)%	%priority(1)%	 %%id:40	eqClass: 40	(data axiom)
+	. not 0 = x	%(Ax23)%	%priority(1)%	 %%id:41	eqClass: 41	(data axiom)
+	. not 0 = x1	%(Ax24)%	%priority(1)%	 %%id:42	eqClass: 42	(data axiom)
+	forall c : Note . suc(c) = 0 <=> (var c : Note) = x1	%(AxSucc0-11:p:100:r:0)%	%priority(100)%	 %%id:43	eqClass: 43
+	forall c, d : Note . suc(c) = suc(d) <=> (var c : Note) = d	%(AxSuccEql:p:100:r:0)%	%priority(100)%	 %%id:44	eqClass: 44
+	forall c : Note . c + 0 = (var c : Note)	%(AxSuccDontKnow:p:100:r:0)%	%priority(100)%	 %%id:45	eqClass: 45
+	forall c, d : Note . c + suc(d) = suc(c + d)	%(AxSuccAdd:p:100:r:0)%	%priority(100)%	 %%id:46	eqClass: 46
+end
+
+view G7_gen_3ToG7_gen_2 : G7_gen_3 to G7_gen_2 end 
+
+view GenToG7_gen_3 : Generic to G7_gen_3 end 
+
+spec Bbmin = 
+	 sort Chord	%%prio:1
+	 sort Note	%%prio:1	(data sort)
+		 op 0 : Note	%%prio:1	(data operator)
+		 op 1 : Note	%%prio:1	(data operator)
+		 op 2 : Note	%%prio:1	(data operator)
+		 op 3 : Note	%%prio:1	(data operator)
+		 op 4 : Note	%%prio:1	(data operator)
+		 op 5 : Note	%%prio:1	(data operator)
+		 op 6 : Note	%%prio:1	(data operator)
+		 op 7 : Note	%%prio:1	(data operator)
+		 op 8 : Note	%%prio:1	(data operator)
+		 op 9 : Note	%%prio:1	(data operator)
+		 op __+__ : Note * Note -> Note	%%prio:1
+		 op c : Chord	%%prio:1
+		 op root : Chord -> Note	%%prio:1
+		 op suc : Note -> Note	%%prio:1
+		 op x : Note	%%prio:1	(data operator)
+		 op x1 : Note	%%prio:1	(data operator)
+		 pred hasAbsNote : Chord * Note   %% prio:1
+		 pred hasRelNote : Chord * Note   %% prio:1
+
+	. hasAbsNote(c, x)	%(Ax-absb10:p:1)%	%priority(1)%	 %%id:47	eqClass: 47
+	. hasAbsNote(c, 1)	%(Ax-absb1:p:3)%	%priority(3)%	 %%id:48	eqClass: 48
+	. hasAbsNote(c, 5)	%(Ax-absb5:p:2)%	%priority(2)%	 %%id:49	eqClass: 3
+	. root(c) = x	%(Ax-rootb10:p:2)%	%priority(2)%	 %%id:50	eqClass: 49
+	. hasRelNote(c, 0)	%(Ax-relb0:p:2)%	%priority(2)%	 %%id:51	eqClass: 5
+	. hasRelNote(c, 3)	%(Ax-relb3:p:1)%	%priority(1)%	 %%id:52	eqClass: 50
+	. hasRelNote(c, 7)	%(Ax-relbb7:p:0)%	%priority(0)%	 %%id:53	eqClass: 7
+	forall c : Chord
+. exists n : Note
+  . root((var c : Chord)) = n /\ hasAbsNote((var c : Chord), n)	%(exOneRootThatMustBePlayed:p:-1)%	%priority(-1)%	 %%id:54	eqClass: 9
+	forall c : Chord; n : Note
+. hasRelNote((var c : Chord), n)
+  <=> hasAbsNote((var c : Chord), root((var c : Chord)) + n)	%(reltoabs_note:p:-1)%	%priority(-1)%	 %%id:55	eqClass: 10
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 7))	%(dis1:p:-1)%	%priority(-1)%	 %%id:56	eqClass: 11
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 2))	%(dis2:p:-1)%	%priority(-1)%	 %%id:57	eqClass: 12
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 4)
+       /\ hasRelNote((var c : Chord), 4))	%(dis3:p:-1)%	%priority(-1)%	 %%id:58	eqClass: 13
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 6))	%(Ax6)%	%priority(1)%	 %%id:59	eqClass: 14
+	forall c : Chord
+. not (hasRelNote((var c : Chord), 3)
+       /\ hasRelNote((var c : Chord), 4))	%(dis_minorMajorThird:p:-1)%	%priority(-1)%	 %%id:60	eqClass: 15
+	forall c : Chord
+. not (hasRelNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 6))	%(dis_perfectDimFifth:p:-1)%	%priority(-1)%	 %%id:61	eqClass: 16
+	forall c : Chord . not hasRelNote((var c : Chord), 1)	%(dis_second:p:-1)%	%priority(-1)%	 %%id:62	eqClass: 17
+	forall c : Chord
+. not (hasRelNote((var c : Chord), x)
+       /\ hasRelNote((var c : Chord), 9))	%(dis_seventhsixth:p:-1)%	%priority(-1)%	 %%id:63	eqClass: 18
+	generated type
+Note ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | x | x1	%(ga_generated_Note)%	%priority(1)%	 %%id:64	eqClass: 19	(data axiom)
+	. suc(0) = 1	%(AxSucc0:p:100:r:0)%	%priority(100)%	 %%id:65	eqClass: 20
+	. suc(1) = 2	%(AxSucc1:p:100:r:0)%	%priority(100)%	 %%id:66	eqClass: 21
+	. suc(2) = 3	%(AxSucc2:p:100:r:0)%	%priority(100)%	 %%id:67	eqClass: 22
+	. suc(3) = 4	%(AxSucc3:p:100:r:0)%	%priority(100)%	 %%id:68	eqClass: 23
+	. suc(4) = 5	%(AxSucc4:p:100:r:0)%	%priority(100)%	 %%id:69	eqClass: 24
+	. suc(5) = 6	%(AxSucc5:p:100:r:0)%	%priority(100)%	 %%id:70	eqClass: 25
+	. suc(6) = 7	%(AxSucc6:p:100:r:0)%	%priority(100)%	 %%id:71	eqClass: 26
+	. suc(7) = 8	%(AxSucc7:p:100:r:0)%	%priority(100)%	 %%id:72	eqClass: 27
+	. suc(8) = 9	%(AxSucc8:p:100:r:0)%	%priority(100)%	 %%id:73	eqClass: 28
+	. suc(9) = x	%(AxSucc9:p:100:r:0)%	%priority(100)%	 %%id:74	eqClass: 29
+	. suc(x) = x1	%(AxSucc10:p:100:r:0)%	%priority(100)%	 %%id:75	eqClass: 30
+	. suc(x1) = 0	%(AxSucc11:p:100:r:0)%	%priority(100)%	 %%id:76	eqClass: 31
+	. not 0 = 1	%(Ax14)%	%priority(1)%	 %%id:77	eqClass: 32	(data axiom)
+	. not 0 = 2	%(Ax15)%	%priority(1)%	 %%id:78	eqClass: 33	(data axiom)
+	. not 0 = 3	%(Ax16)%	%priority(1)%	 %%id:79	eqClass: 34	(data axiom)
+	. not 0 = 4	%(Ax17)%	%priority(1)%	 %%id:80	eqClass: 35	(data axiom)
+	. not 0 = 5	%(Ax18)%	%priority(1)%	 %%id:81	eqClass: 36	(data axiom)
+	. not 0 = 6	%(Ax19)%	%priority(1)%	 %%id:82	eqClass: 37	(data axiom)
+	. not 0 = 7	%(Ax20)%	%priority(1)%	 %%id:83	eqClass: 38	(data axiom)
+	. not 0 = 8	%(Ax21)%	%priority(1)%	 %%id:84	eqClass: 39	(data axiom)
+	. not 0 = 9	%(Ax22)%	%priority(1)%	 %%id:85	eqClass: 40	(data axiom)
+	. not 0 = x	%(Ax23)%	%priority(1)%	 %%id:86	eqClass: 41	(data axiom)
+	. not 0 = x1	%(Ax24)%	%priority(1)%	 %%id:87	eqClass: 42	(data axiom)
+	forall c : Note . suc(c) = 0 <=> (var c : Note) = x1	%(AxSucc0-11:p:100:r:0)%	%priority(100)%	 %%id:88	eqClass: 43
+	forall c, d : Note . suc(c) = suc(d) <=> (var c : Note) = d	%(AxSuccEql:p:100:r:0)%	%priority(100)%	 %%id:89	eqClass: 44
+	forall c : Note . c + 0 = (var c : Note)	%(AxSuccDontKnow:p:100:r:0)%	%priority(100)%	 %%id:90	eqClass: 45
+	forall c, d : Note . c + suc(d) = suc(c + d)	%(AxSuccAdd:p:100:r:0)%	%priority(100)%	 %%id:91	eqClass: 46
+end
+
+spec Bbmin_gen_1 = 
+	 sort Chord	%%prio:1
+	 sort Note	%%prio:1	(data sort)
+		 op 0 : Note	%%prio:1	(data operator)
+		 op 1 : Note	%%prio:1	(data operator)
+		 op 2 : Note	%%prio:1	(data operator)
+		 op 3 : Note	%%prio:1	(data operator)
+		 op 4 : Note	%%prio:1	(data operator)
+		 op 5 : Note	%%prio:1	(data operator)
+		 op 6 : Note	%%prio:1	(data operator)
+		 op 7 : Note	%%prio:1	(data operator)
+		 op 8 : Note	%%prio:1	(data operator)
+		 op 9 : Note	%%prio:1	(data operator)
+		 op __+__ : Note * Note -> Note	%%prio:1
+		 op c : Chord	%%prio:1
+		 op root : Chord -> Note	%%prio:1
+		 op suc : Note -> Note	%%prio:1
+		 op x : Note	%%prio:1	(data operator)
+		 op x1 : Note	%%prio:1	(data operator)
+		 pred hasAbsNote : Chord * Note   %% prio:1
+		 pred hasRelNote : Chord * Note   %% prio:1
+
+	. hasAbsNote(c, x)	%(Ax-absb10:p:1)%	%priority(1)%	 %%id:47	eqClass: 47
+	. hasAbsNote(c, 1)	%(Ax-absb1:p:3)%	%priority(3)%	 %%id:48	eqClass: 48
+	. hasAbsNote(c, 5)	%(Ax-absb5:p:2)%	%priority(2)%	 %%id:49	eqClass: 3
+	. root(c) = x	%(Ax-rootb10:p:2)%	%priority(2)%	 %%id:50	eqClass: 49
+	. hasRelNote(c, 0)	%(Ax-relb0:p:2)%	%priority(2)%	 %%id:51	eqClass: 5
+	. hasRelNote(c, 7)	%(Ax-relbb7:p:0)%	%priority(0)%	 %%id:53	eqClass: 7
+	forall c : Chord
+. exists n : Note
+  . root((var c : Chord)) = n /\ hasAbsNote((var c : Chord), n)	%(exOneRootThatMustBePlayed:p:-1)%	%priority(-1)%	 %%id:54	eqClass: 9
+	forall c : Chord; n : Note
+. hasRelNote((var c : Chord), n)
+  <=> hasAbsNote((var c : Chord), root((var c : Chord)) + n)	%(reltoabs_note:p:-1)%	%priority(-1)%	 %%id:55	eqClass: 10
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 7))	%(dis1:p:-1)%	%priority(-1)%	 %%id:56	eqClass: 11
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 2))	%(dis2:p:-1)%	%priority(-1)%	 %%id:57	eqClass: 12
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 4)
+       /\ hasRelNote((var c : Chord), 4))	%(dis3:p:-1)%	%priority(-1)%	 %%id:58	eqClass: 13
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 6))	%(Ax6)%	%priority(1)%	 %%id:59	eqClass: 14
+	forall c : Chord
+. not (hasRelNote((var c : Chord), 3)
+       /\ hasRelNote((var c : Chord), 4))	%(dis_minorMajorThird:p:-1)%	%priority(-1)%	 %%id:60	eqClass: 15
+	forall c : Chord
+. not (hasRelNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 6))	%(dis_perfectDimFifth:p:-1)%	%priority(-1)%	 %%id:61	eqClass: 16
+	forall c : Chord . not hasRelNote((var c : Chord), 1)	%(dis_second:p:-1)%	%priority(-1)%	 %%id:62	eqClass: 17
+	forall c : Chord
+. not (hasRelNote((var c : Chord), x)
+       /\ hasRelNote((var c : Chord), 9))	%(dis_seventhsixth:p:-1)%	%priority(-1)%	 %%id:63	eqClass: 18
+	generated type
+Note ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | x | x1	%(ga_generated_Note)%	%priority(1)%	 %%id:64	eqClass: 19	(data axiom)
+	. suc(0) = 1	%(AxSucc0:p:100:r:0)%	%priority(100)%	 %%id:65	eqClass: 20
+	. suc(1) = 2	%(AxSucc1:p:100:r:0)%	%priority(100)%	 %%id:66	eqClass: 21
+	. suc(2) = 3	%(AxSucc2:p:100:r:0)%	%priority(100)%	 %%id:67	eqClass: 22
+	. suc(3) = 4	%(AxSucc3:p:100:r:0)%	%priority(100)%	 %%id:68	eqClass: 23
+	. suc(4) = 5	%(AxSucc4:p:100:r:0)%	%priority(100)%	 %%id:69	eqClass: 24
+	. suc(5) = 6	%(AxSucc5:p:100:r:0)%	%priority(100)%	 %%id:70	eqClass: 25
+	. suc(6) = 7	%(AxSucc6:p:100:r:0)%	%priority(100)%	 %%id:71	eqClass: 26
+	. suc(7) = 8	%(AxSucc7:p:100:r:0)%	%priority(100)%	 %%id:72	eqClass: 27
+	. suc(8) = 9	%(AxSucc8:p:100:r:0)%	%priority(100)%	 %%id:73	eqClass: 28
+	. suc(9) = x	%(AxSucc9:p:100:r:0)%	%priority(100)%	 %%id:74	eqClass: 29
+	. suc(x) = x1	%(AxSucc10:p:100:r:0)%	%priority(100)%	 %%id:75	eqClass: 30
+	. suc(x1) = 0	%(AxSucc11:p:100:r:0)%	%priority(100)%	 %%id:76	eqClass: 31
+	. not 0 = 1	%(Ax14)%	%priority(1)%	 %%id:77	eqClass: 32	(data axiom)
+	. not 0 = 2	%(Ax15)%	%priority(1)%	 %%id:78	eqClass: 33	(data axiom)
+	. not 0 = 3	%(Ax16)%	%priority(1)%	 %%id:79	eqClass: 34	(data axiom)
+	. not 0 = 4	%(Ax17)%	%priority(1)%	 %%id:80	eqClass: 35	(data axiom)
+	. not 0 = 5	%(Ax18)%	%priority(1)%	 %%id:81	eqClass: 36	(data axiom)
+	. not 0 = 6	%(Ax19)%	%priority(1)%	 %%id:82	eqClass: 37	(data axiom)
+	. not 0 = 7	%(Ax20)%	%priority(1)%	 %%id:83	eqClass: 38	(data axiom)
+	. not 0 = 8	%(Ax21)%	%priority(1)%	 %%id:84	eqClass: 39	(data axiom)
+	. not 0 = 9	%(Ax22)%	%priority(1)%	 %%id:85	eqClass: 40	(data axiom)
+	. not 0 = x	%(Ax23)%	%priority(1)%	 %%id:86	eqClass: 41	(data axiom)
+	. not 0 = x1	%(Ax24)%	%priority(1)%	 %%id:87	eqClass: 42	(data axiom)
+	forall c : Note . suc(c) = 0 <=> (var c : Note) = x1	%(AxSucc0-11:p:100:r:0)%	%priority(100)%	 %%id:88	eqClass: 43
+	forall c, d : Note . suc(c) = suc(d) <=> (var c : Note) = d	%(AxSuccEql:p:100:r:0)%	%priority(100)%	 %%id:89	eqClass: 44
+	forall c : Note . c + 0 = (var c : Note)	%(AxSuccDontKnow:p:100:r:0)%	%priority(100)%	 %%id:90	eqClass: 45
+	forall c, d : Note . c + suc(d) = suc(c + d)	%(AxSuccAdd:p:100:r:0)%	%priority(100)%	 %%id:91	eqClass: 46
+end
+
+view Bbmin_gen_1ToBbmin : Bbmin_gen_1 to Bbmin end 
+
+spec Bbmin_gen_2 = 
+	 sort Chord	%%prio:1
+	 sort Note	%%prio:1	(data sort)
+		 op 0 : Note	%%prio:1	(data operator)
+		 op 1 : Note	%%prio:1	(data operator)
+		 op 2 : Note	%%prio:1	(data operator)
+		 op 3 : Note	%%prio:1	(data operator)
+		 op 4 : Note	%%prio:1	(data operator)
+		 op 5 : Note	%%prio:1	(data operator)
+		 op 6 : Note	%%prio:1	(data operator)
+		 op 7 : Note	%%prio:1	(data operator)
+		 op 8 : Note	%%prio:1	(data operator)
+		 op 9 : Note	%%prio:1	(data operator)
+		 op __+__ : Note * Note -> Note	%%prio:1
+		 op c : Chord	%%prio:1
+		 op root : Chord -> Note	%%prio:1
+		 op suc : Note -> Note	%%prio:1
+		 op x : Note	%%prio:1	(data operator)
+		 op x1 : Note	%%prio:1	(data operator)
+		 pred hasAbsNote : Chord * Note   %% prio:1
+		 pred hasRelNote : Chord * Note   %% prio:1
+
+	. hasAbsNote(c, 1)	%(Ax-absb1:p:3)%	%priority(3)%	 %%id:48	eqClass: 48
+	. hasAbsNote(c, 5)	%(Ax-absb5:p:2)%	%priority(2)%	 %%id:49	eqClass: 3
+	. root(c) = x	%(Ax-rootb10:p:2)%	%priority(2)%	 %%id:50	eqClass: 49
+	. hasRelNote(c, 0)	%(Ax-relb0:p:2)%	%priority(2)%	 %%id:51	eqClass: 5
+	. hasRelNote(c, 7)	%(Ax-relbb7:p:0)%	%priority(0)%	 %%id:53	eqClass: 7
+	forall c : Chord
+. exists n : Note
+  . root((var c : Chord)) = n /\ hasAbsNote((var c : Chord), n)	%(exOneRootThatMustBePlayed:p:-1)%	%priority(-1)%	 %%id:54	eqClass: 9
+	forall c : Chord; n : Note
+. hasRelNote((var c : Chord), n)
+  <=> hasAbsNote((var c : Chord), root((var c : Chord)) + n)	%(reltoabs_note:p:-1)%	%priority(-1)%	 %%id:55	eqClass: 10
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 7))	%(dis1:p:-1)%	%priority(-1)%	 %%id:56	eqClass: 11
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 2))	%(dis2:p:-1)%	%priority(-1)%	 %%id:57	eqClass: 12
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 4)
+       /\ hasRelNote((var c : Chord), 4))	%(dis3:p:-1)%	%priority(-1)%	 %%id:58	eqClass: 13
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 6))	%(Ax6)%	%priority(1)%	 %%id:59	eqClass: 14
+	forall c : Chord
+. not (hasRelNote((var c : Chord), 3)
+       /\ hasRelNote((var c : Chord), 4))	%(dis_minorMajorThird:p:-1)%	%priority(-1)%	 %%id:60	eqClass: 15
+	forall c : Chord
+. not (hasRelNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 6))	%(dis_perfectDimFifth:p:-1)%	%priority(-1)%	 %%id:61	eqClass: 16
+	forall c : Chord . not hasRelNote((var c : Chord), 1)	%(dis_second:p:-1)%	%priority(-1)%	 %%id:62	eqClass: 17
+	forall c : Chord
+. not (hasRelNote((var c : Chord), x)
+       /\ hasRelNote((var c : Chord), 9))	%(dis_seventhsixth:p:-1)%	%priority(-1)%	 %%id:63	eqClass: 18
+	generated type
+Note ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | x | x1	%(ga_generated_Note)%	%priority(1)%	 %%id:64	eqClass: 19	(data axiom)
+	. suc(0) = 1	%(AxSucc0:p:100:r:0)%	%priority(100)%	 %%id:65	eqClass: 20
+	. suc(1) = 2	%(AxSucc1:p:100:r:0)%	%priority(100)%	 %%id:66	eqClass: 21
+	. suc(2) = 3	%(AxSucc2:p:100:r:0)%	%priority(100)%	 %%id:67	eqClass: 22
+	. suc(3) = 4	%(AxSucc3:p:100:r:0)%	%priority(100)%	 %%id:68	eqClass: 23
+	. suc(4) = 5	%(AxSucc4:p:100:r:0)%	%priority(100)%	 %%id:69	eqClass: 24
+	. suc(5) = 6	%(AxSucc5:p:100:r:0)%	%priority(100)%	 %%id:70	eqClass: 25
+	. suc(6) = 7	%(AxSucc6:p:100:r:0)%	%priority(100)%	 %%id:71	eqClass: 26
+	. suc(7) = 8	%(AxSucc7:p:100:r:0)%	%priority(100)%	 %%id:72	eqClass: 27
+	. suc(8) = 9	%(AxSucc8:p:100:r:0)%	%priority(100)%	 %%id:73	eqClass: 28
+	. suc(9) = x	%(AxSucc9:p:100:r:0)%	%priority(100)%	 %%id:74	eqClass: 29
+	. suc(x) = x1	%(AxSucc10:p:100:r:0)%	%priority(100)%	 %%id:75	eqClass: 30
+	. suc(x1) = 0	%(AxSucc11:p:100:r:0)%	%priority(100)%	 %%id:76	eqClass: 31
+	. not 0 = 1	%(Ax14)%	%priority(1)%	 %%id:77	eqClass: 32	(data axiom)
+	. not 0 = 2	%(Ax15)%	%priority(1)%	 %%id:78	eqClass: 33	(data axiom)
+	. not 0 = 3	%(Ax16)%	%priority(1)%	 %%id:79	eqClass: 34	(data axiom)
+	. not 0 = 4	%(Ax17)%	%priority(1)%	 %%id:80	eqClass: 35	(data axiom)
+	. not 0 = 5	%(Ax18)%	%priority(1)%	 %%id:81	eqClass: 36	(data axiom)
+	. not 0 = 6	%(Ax19)%	%priority(1)%	 %%id:82	eqClass: 37	(data axiom)
+	. not 0 = 7	%(Ax20)%	%priority(1)%	 %%id:83	eqClass: 38	(data axiom)
+	. not 0 = 8	%(Ax21)%	%priority(1)%	 %%id:84	eqClass: 39	(data axiom)
+	. not 0 = 9	%(Ax22)%	%priority(1)%	 %%id:85	eqClass: 40	(data axiom)
+	. not 0 = x	%(Ax23)%	%priority(1)%	 %%id:86	eqClass: 41	(data axiom)
+	. not 0 = x1	%(Ax24)%	%priority(1)%	 %%id:87	eqClass: 42	(data axiom)
+	forall c : Note . suc(c) = 0 <=> (var c : Note) = x1	%(AxSucc0-11:p:100:r:0)%	%priority(100)%	 %%id:88	eqClass: 43
+	forall c, d : Note . suc(c) = suc(d) <=> (var c : Note) = d	%(AxSuccEql:p:100:r:0)%	%priority(100)%	 %%id:89	eqClass: 44
+	forall c : Note . c + 0 = (var c : Note)	%(AxSuccDontKnow:p:100:r:0)%	%priority(100)%	 %%id:90	eqClass: 45
+	forall c, d : Note . c + suc(d) = suc(c + d)	%(AxSuccAdd:p:100:r:0)%	%priority(100)%	 %%id:91	eqClass: 46
+end
+
+view Bbmin_gen_2ToBbmin_gen_1 : Bbmin_gen_2 to Bbmin_gen_1 end 
+
+spec Bbmin_gen_3 = 
+	 sort Chord	%%prio:1
+	 sort Note	%%prio:1	(data sort)
+		 op 0 : Note	%%prio:1	(data operator)
+		 op 1 : Note	%%prio:1	(data operator)
+		 op 2 : Note	%%prio:1	(data operator)
+		 op 3 : Note	%%prio:1	(data operator)
+		 op 4 : Note	%%prio:1	(data operator)
+		 op 5 : Note	%%prio:1	(data operator)
+		 op 6 : Note	%%prio:1	(data operator)
+		 op 7 : Note	%%prio:1	(data operator)
+		 op 8 : Note	%%prio:1	(data operator)
+		 op 9 : Note	%%prio:1	(data operator)
+		 op __+__ : Note * Note -> Note	%%prio:1
+		 op c : Chord	%%prio:1
+		 op root : Chord -> Note	%%prio:1
+		 op suc : Note -> Note	%%prio:1
+		 op x : Note	%%prio:1	(data operator)
+		 op x1 : Note	%%prio:1	(data operator)
+		 pred hasAbsNote : Chord * Note   %% prio:1
+		 pred hasRelNote : Chord * Note   %% prio:1
+
+	. hasAbsNote(c, 1)	%(Ax-absb1:p:3)%	%priority(3)%	 %%id:48	eqClass: 48
+	. hasAbsNote(c, 5)	%(Ax-absb5:p:2)%	%priority(2)%	 %%id:49	eqClass: 3
+	. hasRelNote(c, 0)	%(Ax-relb0:p:2)%	%priority(2)%	 %%id:51	eqClass: 5
+	. hasRelNote(c, 7)	%(Ax-relbb7:p:0)%	%priority(0)%	 %%id:53	eqClass: 7
+	forall c : Chord
+. exists n : Note
+  . root((var c : Chord)) = n /\ hasAbsNote((var c : Chord), n)	%(exOneRootThatMustBePlayed:p:-1)%	%priority(-1)%	 %%id:54	eqClass: 9
+	forall c : Chord; n : Note
+. hasRelNote((var c : Chord), n)
+  <=> hasAbsNote((var c : Chord), root((var c : Chord)) + n)	%(reltoabs_note:p:-1)%	%priority(-1)%	 %%id:55	eqClass: 10
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 7))	%(dis1:p:-1)%	%priority(-1)%	 %%id:56	eqClass: 11
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 2))	%(dis2:p:-1)%	%priority(-1)%	 %%id:57	eqClass: 12
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 4)
+       /\ hasRelNote((var c : Chord), 4))	%(dis3:p:-1)%	%priority(-1)%	 %%id:58	eqClass: 13
+	forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 6))	%(Ax6)%	%priority(1)%	 %%id:59	eqClass: 14
+	forall c : Chord
+. not (hasRelNote((var c : Chord), 3)
+       /\ hasRelNote((var c : Chord), 4))	%(dis_minorMajorThird:p:-1)%	%priority(-1)%	 %%id:60	eqClass: 15
+	forall c : Chord
+. not (hasRelNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 6))	%(dis_perfectDimFifth:p:-1)%	%priority(-1)%	 %%id:61	eqClass: 16
+	forall c : Chord . not hasRelNote((var c : Chord), 1)	%(dis_second:p:-1)%	%priority(-1)%	 %%id:62	eqClass: 17
+	forall c : Chord
+. not (hasRelNote((var c : Chord), x)
+       /\ hasRelNote((var c : Chord), 9))	%(dis_seventhsixth:p:-1)%	%priority(-1)%	 %%id:63	eqClass: 18
+	generated type
+Note ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | x | x1	%(ga_generated_Note)%	%priority(1)%	 %%id:64	eqClass: 19	(data axiom)
+	. suc(0) = 1	%(AxSucc0:p:100:r:0)%	%priority(100)%	 %%id:65	eqClass: 20
+	. suc(1) = 2	%(AxSucc1:p:100:r:0)%	%priority(100)%	 %%id:66	eqClass: 21
+	. suc(2) = 3	%(AxSucc2:p:100:r:0)%	%priority(100)%	 %%id:67	eqClass: 22
+	. suc(3) = 4	%(AxSucc3:p:100:r:0)%	%priority(100)%	 %%id:68	eqClass: 23
+	. suc(4) = 5	%(AxSucc4:p:100:r:0)%	%priority(100)%	 %%id:69	eqClass: 24
+	. suc(5) = 6	%(AxSucc5:p:100:r:0)%	%priority(100)%	 %%id:70	eqClass: 25
+	. suc(6) = 7	%(AxSucc6:p:100:r:0)%	%priority(100)%	 %%id:71	eqClass: 26
+	. suc(7) = 8	%(AxSucc7:p:100:r:0)%	%priority(100)%	 %%id:72	eqClass: 27
+	. suc(8) = 9	%(AxSucc8:p:100:r:0)%	%priority(100)%	 %%id:73	eqClass: 28
+	. suc(9) = x	%(AxSucc9:p:100:r:0)%	%priority(100)%	 %%id:74	eqClass: 29
+	. suc(x) = x1	%(AxSucc10:p:100:r:0)%	%priority(100)%	 %%id:75	eqClass: 30
+	. suc(x1) = 0	%(AxSucc11:p:100:r:0)%	%priority(100)%	 %%id:76	eqClass: 31
+	. not 0 = 1	%(Ax14)%	%priority(1)%	 %%id:77	eqClass: 32	(data axiom)
+	. not 0 = 2	%(Ax15)%	%priority(1)%	 %%id:78	eqClass: 33	(data axiom)
+	. not 0 = 3	%(Ax16)%	%priority(1)%	 %%id:79	eqClass: 34	(data axiom)
+	. not 0 = 4	%(Ax17)%	%priority(1)%	 %%id:80	eqClass: 35	(data axiom)
+	. not 0 = 5	%(Ax18)%	%priority(1)%	 %%id:81	eqClass: 36	(data axiom)
+	. not 0 = 6	%(Ax19)%	%priority(1)%	 %%id:82	eqClass: 37	(data axiom)
+	. not 0 = 7	%(Ax20)%	%priority(1)%	 %%id:83	eqClass: 38	(data axiom)
+	. not 0 = 8	%(Ax21)%	%priority(1)%	 %%id:84	eqClass: 39	(data axiom)
+	. not 0 = 9	%(Ax22)%	%priority(1)%	 %%id:85	eqClass: 40	(data axiom)
+	. not 0 = x	%(Ax23)%	%priority(1)%	 %%id:86	eqClass: 41	(data axiom)
+	. not 0 = x1	%(Ax24)%	%priority(1)%	 %%id:87	eqClass: 42	(data axiom)
+	forall c : Note . suc(c) = 0 <=> (var c : Note) = x1	%(AxSucc0-11:p:100:r:0)%	%priority(100)%	 %%id:88	eqClass: 43
+	forall c, d : Note . suc(c) = suc(d) <=> (var c : Note) = d	%(AxSuccEql:p:100:r:0)%	%priority(100)%	 %%id:89	eqClass: 44
+	forall c : Note . c + 0 = (var c : Note)	%(AxSuccDontKnow:p:100:r:0)%	%priority(100)%	 %%id:90	eqClass: 45
+	forall c, d : Note . c + suc(d) = suc(c + d)	%(AxSuccAdd:p:100:r:0)%	%priority(100)%	 %%id:91	eqClass: 46
+end
+
+view Bbmin_gen_3ToBbmin_gen_2 : Bbmin_gen_3 to Bbmin_gen_2 end 
+
+view GenToBbmin_gen_3 : Generic to Bbmin_gen_3 end 
+
+spec Blend = combine GenToG7_gen_3,GenToBbmin_gen_3 end
+
+
+
+
+spec BlendExplicit = 
+sorts Chord, Note
+op 0 : Note
+op 1 : Note
+op 2 : Note
+op 3 : Note
+op 4 : Note
+op 5 : Note
+op 6 : Note
+op 7 : Note
+op 8 : Note
+op 9 : Note
+op __+__ : Note * Note -> Note
+op c : Chord
+op root : Chord -> Note
+op suc : Note -> Note
+op x : Note
+op x1 : Note
+pred hasAbsNote : Chord * Note
+pred hasRelNote : Chord * Note
+
+. hasAbsNote(c, x1) %(Ax-absg11:p:3)%
+
+. hasRelNote(c, 4) %(Ax-relg4:p:3)%
+
+. hasRelNote(c, x) %(Ax-relg10:p:2)%
+
+forall c : Chord
+. exists n : Note
+  . root((var c : Chord)) = n /\ hasAbsNote((var c : Chord), n)
+                                %(exOneRootThatMustBePlayed:p:-1)%
+
+forall c : Chord; n : Note
+. hasRelNote((var c : Chord), n)
+  <=> hasAbsNote((var c : Chord), root((var c : Chord)) + n)
+                                            %(reltoabs_note:p:-1)%
+
+forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 7))            %(dis1:p:-1)%
+
+forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 2))
+                                                     %(dis2:p:-1)%
+
+forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 4)
+       /\ hasRelNote((var c : Chord), 4))            %(dis3:p:-1)%
+
+forall c : Chord
+. not (root((var c : Chord)) = 1 /\ hasAbsNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 6))                  %(Ax6)%
+
+forall c : Chord
+. not (hasRelNote((var c : Chord), 3)
+       /\ hasRelNote((var c : Chord), 4))
+                                      %(dis_minorMajorThird:p:-1)%
+
+forall c : Chord
+. not (hasRelNote((var c : Chord), 7)
+       /\ hasRelNote((var c : Chord), 6))
+                                      %(dis_perfectDimFifth:p:-1)%
+
+forall c : Chord . not hasRelNote((var c : Chord), 1)
+                                               %(dis_second:p:-1)%
+
+forall c : Chord
+. not (hasRelNote((var c : Chord), x)
+       /\ hasRelNote((var c : Chord), 9))
+                                         %(dis_seventhsixth:p:-1)%
+
+generated type
+Note ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | x | x1
+                                             %(ga_generated_Note)%
+
+. suc(0) = 1 %(AxSucc0:p:100:r:0)%
+
+. suc(1) = 2 %(AxSucc1:p:100:r:0)%
+
+. suc(2) = 3 %(AxSucc2:p:100:r:0)%
+
+. suc(3) = 4 %(AxSucc3:p:100:r:0)%
+
+. suc(4) = 5 %(AxSucc4:p:100:r:0)%
+
+. suc(5) = 6 %(AxSucc5:p:100:r:0)%
+
+. suc(6) = 7 %(AxSucc6:p:100:r:0)%
+
+. suc(7) = 8 %(AxSucc7:p:100:r:0)%
+
+. suc(8) = 9 %(AxSucc8:p:100:r:0)%
+
+. suc(9) = x %(AxSucc9:p:100:r:0)%
+
+. suc(x) = x1 %(AxSucc10:p:100:r:0)%
+
+. suc(x1) = 0 %(AxSucc11:p:100:r:0)%
+
+. not 0 = 1 %(Ax14)%
+
+. not 0 = 2 %(Ax15)%
+
+. not 0 = 3 %(Ax16)%
+
+. not 0 = 4 %(Ax17)%
+
+. not 0 = 5 %(Ax18)%
+
+. not 0 = 6 %(Ax19)%
+
+. not 0 = 7 %(Ax20)%
+
+. not 0 = 8 %(Ax21)%
+
+. not 0 = 9 %(Ax22)%
+
+. not 0 = x %(Ax23)%
+
+. not 0 = x1 %(Ax24)%
+
+forall c : Note . suc(c) = 0 <=> (var c : Note) = x1
+                                          %(AxSucc0-11:p:100:r:0)%
+
+forall c, d : Note . suc(c) = suc(d) <=> (var c : Note) = d
+                                           %(AxSuccEql:p:100:r:0)%
+
+forall c : Note . c + 0 = (var c : Note)
+                                      %(AxSuccDontKnow:p:100:r:0)%
+
+forall c, d : Note . c + suc(d) = suc(c + d)
+                                           %(AxSuccAdd:p:100:r:0)%
+
+. hasAbsNote(c, 1) %(Ax-absb1:p:3)%
+
+. hasAbsNote(c, 5) %(Ax-absb5:p:2)%
+
+. hasRelNote(c, 0) %(Ax-relb0:p:2)%
+
+. hasRelNote(c, 7) %(Ax-relbb7:p:0)%
+
+ end

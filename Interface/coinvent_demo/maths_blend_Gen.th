@@ -1,0 +1,10 @@
+logic CASL.Horn=
+spec Gen =
+sorts Generic
+op S : Generic
+op __gpr__ : Generic * Generic -> Generic
+pred gcont : Generic * Generic
+
+forall x : Generic . x gpr S = x %(ga_right_unit___gpr__)%
+
+forall x : Generic . S gpr x = x %(ga_left_unit___gpr__)%

@@ -1,0 +1,633 @@
+spec Generic = 
+	 sort El	%%prio:17
+	 sort L	%%prio:16
+		 op app : L * L -> L	%%prio:13
+		 op cons : El * L -> L	%%prio:14
+		 op nil : L	%%prio:15
+		 op qrev : L * L -> L	%%prio:10
+		 op rev : L -> L	%%prio:10
+
+	forall x : L . qrev(nil, x) = x	%(Ax-qrevnilxx:p:4)%	%priority(4)%	 %%id:13	eqClass: 13
+	forall x : L . rev(x) = qrev(x, nil)	%(Ax-targetTheoremLists:p:20)%	%priority(20)%	 %%id:19	eqClass: 19
+end
+
+spec List = 
+	 sort El	%%prio:17
+	 sort L	%%prio:16
+		 op app : L * L -> L	%%prio:13
+		 op cons : El * L -> L	%%prio:14
+		 op nil : L	%%prio:15
+		 op qrev : L * L -> L	%%prio:10
+		 op rev : L -> L	%%prio:10
+
+	forall x : L . app(nil, x) = x	%(Ax-AppNilIsId:p:2)%	%priority(2)%	 %%id:12	eqClass: 12
+	forall x : L . qrev(nil, x) = x	%(Ax-qrevnilxx:p:4)%	%priority(4)%	 %%id:13	eqClass: 13
+	forall x, y : L; h : El . app(cons(h, x), y) = cons(h, app(x, y))	%(Ax3)%	%priority(1)%	 %%id:14	eqClass: 14
+	. rev(nil) = nil	%(Ax4)%	%priority(1)%	 %%id:15	eqClass: 15
+	forall x : L; h : El . rev(cons(h, x)) = app(rev(x), cons(h, nil))	%(Ax5)%	%priority(1)%	 %%id:16	eqClass: 16
+	forall x, y : L; h : El . qrev(cons(h, x), y) = qrev(x, cons(h, y))	%(Ax6)%	%priority(1)%	 %%id:17	eqClass: 17
+	forall x : L; h : El . not cons(h, x) = nil	%(Ax_consNotNil:p:3)%	%priority(3)%	 %%id:18	eqClass: 18
+	forall x : L . rev(x) = qrev(x, nil)	%(Ax-targetTheoremLists:p:20)%	%priority(20)%	 %%id:19	eqClass: 19
+end
+
+spec List_gen_1 = 
+	 sort El	%%prio:17
+	 sort L	%%prio:16
+		 op app : L * L -> L	%%prio:13
+		 op cons : El * L -> L	%%prio:14
+		 op nil : L	%%prio:15
+		 op qrev : L * L -> L	%%prio:10
+		 op rev : L -> L	%%prio:10
+
+	forall x : L . app(nil, x) = x	%(Ax-AppNilIsId:p:2)%	%priority(2)%	 %%id:12	eqClass: 12
+	forall x : L . qrev(nil, x) = x	%(Ax-qrevnilxx:p:4)%	%priority(4)%	 %%id:13	eqClass: 13
+	forall x, y : L; h : El . app(cons(h, x), y) = cons(h, app(x, y))	%(Ax3)%	%priority(1)%	 %%id:14	eqClass: 14
+	. rev(nil) = nil	%(Ax4)%	%priority(1)%	 %%id:15	eqClass: 15
+	forall x : L; h : El . rev(cons(h, x)) = app(rev(x), cons(h, nil))	%(Ax5)%	%priority(1)%	 %%id:16	eqClass: 16
+	forall x, y : L; h : El . qrev(cons(h, x), y) = qrev(x, cons(h, y))	%(Ax6)%	%priority(1)%	 %%id:17	eqClass: 17
+	forall x : L; h : El . not cons(h, x) = nil	%(Ax_consNotNil:p:3)%	%priority(3)%	 %%id:18	eqClass: 18
+	forall x : L . rev(x) = qrev(x, nil)	%(Ax-targetTheoremLists:p:20)%	%priority(20)%	 %%id:19	eqClass: 19
+end
+
+view List_gen_1ToList : List_gen_1 to List end 
+
+spec List_gen_2 = 
+	 sort El	%%prio:17
+	 sort L	%%prio:16
+		 op app : L * L -> L	%%prio:13
+		 op cons : El * L -> L	%%prio:14
+		 op nil : L	%%prio:15
+		 op qrev : L * L -> L	%%prio:10
+		 op rev : L -> L	%%prio:10
+
+	forall x : L . app(nil, x) = x	%(Ax-AppNilIsId:p:2)%	%priority(2)%	 %%id:12	eqClass: 12
+	forall x : L . qrev(nil, x) = x	%(Ax-qrevnilxx:p:4)%	%priority(4)%	 %%id:13	eqClass: 13
+	forall x, y : L; h : El . app(cons(h, x), y) = cons(h, app(x, y))	%(Ax3)%	%priority(1)%	 %%id:14	eqClass: 14
+	. rev(nil) = nil	%(Ax4)%	%priority(1)%	 %%id:15	eqClass: 15
+	forall x : L; h : El . rev(cons(h, x)) = app(rev(x), cons(h, nil))	%(Ax5)%	%priority(1)%	 %%id:16	eqClass: 16
+	forall x, y : L; h : El . qrev(cons(h, x), y) = qrev(x, cons(h, y))	%(Ax6)%	%priority(1)%	 %%id:17	eqClass: 17
+	forall x : L; h : El . not cons(h, x) = nil	%(Ax_consNotNil:p:3)%	%priority(3)%	 %%id:18	eqClass: 18
+	forall x : L . rev(x) = qrev(x, nil)	%(Ax-targetTheoremLists:p:20)%	%priority(20)%	 %%id:19	eqClass: 19
+end
+
+view List_gen_2ToList_gen_1 : List_gen_2 to List_gen_1 end 
+
+spec List_gen_3 = 
+	 sort El	%%prio:17
+	 sort L	%%prio:16
+		 op app : L * L -> L	%%prio:13
+		 op cons : El * L -> L	%%prio:14
+		 op nil : L	%%prio:15
+		 op qrev : L * L -> L	%%prio:10
+		 op rev : L -> L	%%prio:10
+
+	forall x : L . app(nil, x) = x	%(Ax-AppNilIsId:p:2)%	%priority(2)%	 %%id:12	eqClass: 12
+	forall x : L . qrev(nil, x) = x	%(Ax-qrevnilxx:p:4)%	%priority(4)%	 %%id:13	eqClass: 13
+	forall x, y : L; h : El . app(cons(h, x), y) = cons(h, app(x, y))	%(Ax3)%	%priority(1)%	 %%id:14	eqClass: 14
+	. rev(nil) = nil	%(Ax4)%	%priority(1)%	 %%id:15	eqClass: 15
+	forall x : L; h : El . rev(cons(h, x)) = app(rev(x), cons(h, nil))	%(Ax5)%	%priority(1)%	 %%id:16	eqClass: 16
+	forall x, y : L; h : El . qrev(cons(h, x), y) = qrev(x, cons(h, y))	%(Ax6)%	%priority(1)%	 %%id:17	eqClass: 17
+	forall x : L; h : El . not cons(h, x) = nil	%(Ax_consNotNil:p:3)%	%priority(3)%	 %%id:18	eqClass: 18
+	forall x : L . rev(x) = qrev(x, nil)	%(Ax-targetTheoremLists:p:20)%	%priority(20)%	 %%id:19	eqClass: 19
+end
+
+view List_gen_3ToList_gen_2 : List_gen_3 to List_gen_2 end 
+
+spec List_gen_4 = 
+	 sort El	%%prio:17
+	 sort L	%%prio:16
+		 op app : L * L -> L	%%prio:13
+		 op cons : El * L -> L	%%prio:14
+		 op nil : L	%%prio:15
+		 op qrev : L * L -> L	%%prio:10
+		 op rev : L -> L	%%prio:10
+
+	forall x : L . app(nil, x) = x	%(Ax-AppNilIsId:p:2)%	%priority(2)%	 %%id:12	eqClass: 12
+	forall x : L . qrev(nil, x) = x	%(Ax-qrevnilxx:p:4)%	%priority(4)%	 %%id:13	eqClass: 13
+	forall x, y : L; h : El . app(cons(h, x), y) = cons(h, app(x, y))	%(Ax3)%	%priority(1)%	 %%id:14	eqClass: 14
+	. rev(nil) = nil	%(Ax4)%	%priority(1)%	 %%id:15	eqClass: 15
+	forall x : L; h : El . rev(cons(h, x)) = app(rev(x), cons(h, nil))	%(Ax5)%	%priority(1)%	 %%id:16	eqClass: 16
+	forall x, y : L; h : El . qrev(cons(h, x), y) = qrev(x, cons(h, y))	%(Ax6)%	%priority(1)%	 %%id:17	eqClass: 17
+	forall x : L; h : El . not cons(h, x) = nil	%(Ax_consNotNil:p:3)%	%priority(3)%	 %%id:18	eqClass: 18
+	forall x : L . rev(x) = qrev(x, nil)	%(Ax-targetTheoremLists:p:20)%	%priority(20)%	 %%id:19	eqClass: 19
+end
+
+view List_gen_4ToList_gen_3 : List_gen_4 to List_gen_3 end 
+
+spec List_gen_5 = 
+	 sort El	%%prio:17
+	 sort L	%%prio:16
+		 op app : L * L -> L	%%prio:13
+		 op cons : El * L -> L	%%prio:14
+		 op nil : L	%%prio:15
+		 op qrev : L * L -> L	%%prio:10
+		 op rev : L -> L	%%prio:10
+
+	forall x : L . app(nil, x) = x	%(Ax-AppNilIsId:p:2)%	%priority(2)%	 %%id:12	eqClass: 12
+	forall x : L . qrev(nil, x) = x	%(Ax-qrevnilxx:p:4)%	%priority(4)%	 %%id:13	eqClass: 13
+	forall x, y : L; h : El . app(cons(h, x), y) = cons(h, app(x, y))	%(Ax3)%	%priority(1)%	 %%id:14	eqClass: 14
+	. rev(nil) = nil	%(Ax4)%	%priority(1)%	 %%id:15	eqClass: 15
+	forall x : L; h : El . rev(cons(h, x)) = app(rev(x), cons(h, nil))	%(Ax5)%	%priority(1)%	 %%id:16	eqClass: 16
+	forall x, y : L; h : El . qrev(cons(h, x), y) = qrev(x, cons(h, y))	%(Ax6)%	%priority(1)%	 %%id:17	eqClass: 17
+	forall x : L; h : El . not cons(h, x) = nil	%(Ax_consNotNil:p:3)%	%priority(3)%	 %%id:18	eqClass: 18
+	forall x : L . rev(x) = qrev(x, nil)	%(Ax-targetTheoremLists:p:20)%	%priority(20)%	 %%id:19	eqClass: 19
+end
+
+view List_gen_5ToList_gen_4 : List_gen_5 to List_gen_4 end 
+
+spec List_gen_6 = 
+	 sort El	%%prio:17
+	 sort L	%%prio:16
+		 op app : L * L -> L	%%prio:13
+		 op cons : El * L -> L	%%prio:14
+		 op nil : L	%%prio:15
+		 op qrev : L * L -> L	%%prio:10
+		 op rev : L -> L	%%prio:10
+
+	forall x : L . app(nil, x) = x	%(Ax-AppNilIsId:p:2)%	%priority(2)%	 %%id:12	eqClass: 12
+	forall x : L . qrev(nil, x) = x	%(Ax-qrevnilxx:p:4)%	%priority(4)%	 %%id:13	eqClass: 13
+	forall x, y : L; h : El . app(cons(h, x), y) = cons(h, app(x, y))	%(Ax3)%	%priority(1)%	 %%id:14	eqClass: 14
+	. rev(nil) = nil	%(Ax4)%	%priority(1)%	 %%id:15	eqClass: 15
+	forall x : L; h : El . rev(cons(h, x)) = app(rev(x), cons(h, nil))	%(Ax5)%	%priority(1)%	 %%id:16	eqClass: 16
+	forall x, y : L; h : El . qrev(cons(h, x), y) = qrev(x, cons(h, y))	%(Ax6)%	%priority(1)%	 %%id:17	eqClass: 17
+	forall x : L; h : El . not cons(h, x) = nil	%(Ax_consNotNil:p:3)%	%priority(3)%	 %%id:18	eqClass: 18
+	forall x : L . rev(x) = qrev(x, nil)	%(Ax-targetTheoremLists:p:20)%	%priority(20)%	 %%id:19	eqClass: 19
+end
+
+view List_gen_6ToList_gen_5 : List_gen_6 to List_gen_5 end 
+
+spec List_gen_7 = 
+	 sort El	%%prio:17
+	 sort L	%%prio:16
+		 op app : L * L -> L	%%prio:13
+		 op cons : El * L -> L	%%prio:14
+		 op nil : L	%%prio:15
+		 op qrev : L * L -> L	%%prio:10
+		 op rev : L -> L	%%prio:10
+
+	forall x : L . app(nil, x) = x	%(Ax-AppNilIsId:p:2)%	%priority(2)%	 %%id:12	eqClass: 12
+	forall x : L . qrev(nil, x) = x	%(Ax-qrevnilxx:p:4)%	%priority(4)%	 %%id:13	eqClass: 13
+	forall x, y : L; h : El . app(cons(h, x), y) = cons(h, app(x, y))	%(Ax3)%	%priority(1)%	 %%id:14	eqClass: 14
+	. rev(nil) = nil	%(Ax4)%	%priority(1)%	 %%id:15	eqClass: 15
+	forall x : L; h : El . rev(cons(h, x)) = app(rev(x), cons(h, nil))	%(Ax5)%	%priority(1)%	 %%id:16	eqClass: 16
+	forall x, y : L; h : El . qrev(cons(h, x), y) = qrev(x, cons(h, y))	%(Ax6)%	%priority(1)%	 %%id:17	eqClass: 17
+	forall x : L; h : El . not cons(h, x) = nil	%(Ax_consNotNil:p:3)%	%priority(3)%	 %%id:18	eqClass: 18
+	forall x : L . rev(x) = qrev(x, nil)	%(Ax-targetTheoremLists:p:20)%	%priority(20)%	 %%id:19	eqClass: 19
+end
+
+view List_gen_7ToList_gen_6 : List_gen_7 to List_gen_6 end 
+
+spec List_gen_8 = 
+	 sort El	%%prio:17
+	 sort L	%%prio:16
+		 op app : L * L -> L	%%prio:13
+		 op cons : El * L -> L	%%prio:14
+		 op nil : L	%%prio:15
+		 op qrev : L * L -> L	%%prio:10
+		 op rev : L -> L	%%prio:10
+
+	forall x : L . app(nil, x) = x	%(Ax-AppNilIsId:p:2)%	%priority(2)%	 %%id:12	eqClass: 12
+	forall x : L . qrev(nil, x) = x	%(Ax-qrevnilxx:p:4)%	%priority(4)%	 %%id:13	eqClass: 13
+	forall x, y : L; h : El . app(cons(h, x), y) = cons(h, app(x, y))	%(Ax3)%	%priority(1)%	 %%id:14	eqClass: 14
+	forall x : L; h : El . rev(cons(h, x)) = app(rev(x), cons(h, nil))	%(Ax5)%	%priority(1)%	 %%id:16	eqClass: 16
+	forall x, y : L; h : El . qrev(cons(h, x), y) = qrev(x, cons(h, y))	%(Ax6)%	%priority(1)%	 %%id:17	eqClass: 17
+	forall x : L; h : El . not cons(h, x) = nil	%(Ax_consNotNil:p:3)%	%priority(3)%	 %%id:18	eqClass: 18
+	forall x : L . rev(x) = qrev(x, nil)	%(Ax-targetTheoremLists:p:20)%	%priority(20)%	 %%id:19	eqClass: 19
+end
+
+view List_gen_8ToList_gen_7 : List_gen_8 to List_gen_7 end 
+
+spec List_gen_9 = 
+	 sort El	%%prio:17
+	 sort L	%%prio:16
+		 op app : L * L -> L	%%prio:13
+		 op cons : El * L -> L	%%prio:14
+		 op nil : L	%%prio:15
+		 op qrev : L * L -> L	%%prio:10
+		 op rev : L -> L	%%prio:10
+
+	forall x : L . app(nil, x) = x	%(Ax-AppNilIsId:p:2)%	%priority(2)%	 %%id:12	eqClass: 12
+	forall x : L . qrev(nil, x) = x	%(Ax-qrevnilxx:p:4)%	%priority(4)%	 %%id:13	eqClass: 13
+	forall x, y : L; h : El . app(cons(h, x), y) = cons(h, app(x, y))	%(Ax3)%	%priority(1)%	 %%id:14	eqClass: 14
+	forall x : L; h : El . rev(cons(h, x)) = app(rev(x), cons(h, nil))	%(Ax5)%	%priority(1)%	 %%id:16	eqClass: 16
+	forall x : L; h : El . not cons(h, x) = nil	%(Ax_consNotNil:p:3)%	%priority(3)%	 %%id:18	eqClass: 18
+	forall x : L . rev(x) = qrev(x, nil)	%(Ax-targetTheoremLists:p:20)%	%priority(20)%	 %%id:19	eqClass: 19
+end
+
+view List_gen_9ToList_gen_8 : List_gen_9 to List_gen_8 end 
+
+view GenToList_gen_9 : Generic to List_gen_9 end 
+
+spec NatSuc = 
+	 sort Element	%%prio:17
+	 sort Nat	%%prio:16
+		 op canonical_element : Element	%%prio:1
+		 op fact : Nat -> Nat	%%prio:10
+		 op plus : Nat * Nat -> Nat	%%prio:6
+		 op qfact : Nat * Nat -> Nat	%%prio:10
+		 op s : Element * Nat -> Nat	%%prio:14
+		 op times : Nat * Nat -> Nat	%%prio:13
+		 op zero : Nat	%%prio:15
+
+	forall x : Nat . times(zero, x) = zero	%(Ax-multizerozero:p:2)%	%priority(2)%	 %%id:0	eqClass: 0
+	forall x : Nat . qfact(zero, x) = x	%(Ax-qfactzerozero:p:9)%	%priority(9)%	 %%id:1	eqClass: 1
+	forall x, y : Nat
+. plus(s(canonical_element, x), y)
+  = s(canonical_element, plus(x, y))	%(Ax-plusSucc:p:3)%	%priority(3)%	 %%id:2	eqClass: 2
+	. fact(zero) = s(canonical_element, zero)	%(Ax-factZeroSuccZero:p:4)%	%priority(4)%	 %%id:3	eqClass: 3
+	forall x : Nat
+. fact(s(canonical_element, x))
+  = times(fact(x), s(canonical_element, x))	%(Ax_multiplyNumberWithFactorial:p:1)%	%priority(1)%	 %%id:4	eqClass: 4
+	forall x, y : Nat
+. qfact(s(canonical_element, x), y)
+  = times(qfact(x, s(canonical_element, x)), y)	%(Ax_qfacttimessucc:p:2)%	%priority(2)%	 %%id:5	eqClass: 5
+	forall x : Nat . not s(canonical_element, x) = zero	%(Ax_succNotZero:p:8)%	%priority(8)%	 %%id:6	eqClass: 6
+	forall x : Nat . plus(zero, x) = x	%(Ax-zeroPlusEqual:p:5)%	%priority(5)%	 %%id:7	eqClass: 7
+	forall x, y : Nat
+. times(s(canonical_element, x), y) = plus(y, times(x, y))	%(Ax-timesPlusRel:p:3)%	%priority(3)%	 %%id:8	eqClass: 8
+	forall x, y : Nat . times(fact(x), y) = qfact(x, y)	%(Ax-heurekaLemmaNat:p:20)%	%priority(20)%	 %%id:9	eqClass: 9
+	forall x : Nat . fact(x) = qfact(x, zero)	%(targetTheorem_Nat:p:20)%	%priority(20)%	 %%id:10	eqClass: 10
+end
+
+spec NatSuc_gen_1 = 
+	 sort Nat	%%prio:16
+	 sort El	%%prio:17
+		 op canonical_element : El	%%prio:1
+		 op fact : Nat -> Nat	%%prio:10
+		 op plus : Nat * Nat -> Nat	%%prio:6
+		 op qfact : Nat * Nat -> Nat	%%prio:10
+		 op s : El * Nat -> Nat	%%prio:14
+		 op times : Nat * Nat -> Nat	%%prio:13
+		 op zero : Nat	%%prio:15
+
+	forall x : Nat . times(zero, x) = zero	%(Ax-multizerozero:p:2)%	%priority(2)%	 %%id:0	eqClass: 0
+	forall x : Nat . qfact(zero, x) = x	%(Ax-qfactzerozero:p:9)%	%priority(9)%	 %%id:1	eqClass: 1
+	forall x, y : Nat
+. plus(s(canonical_element, x), y)
+  = s(canonical_element, plus(x, y))	%(Ax-plusSucc:p:3)%	%priority(3)%	 %%id:2	eqClass: 2
+	. fact(zero) = s(canonical_element, zero)	%(Ax-factZeroSuccZero:p:4)%	%priority(4)%	 %%id:3	eqClass: 3
+	forall x : Nat
+. fact(s(canonical_element, x))
+  = times(fact(x), s(canonical_element, x))	%(Ax_multiplyNumberWithFactorial:p:1)%	%priority(1)%	 %%id:4	eqClass: 4
+	forall x, y : Nat
+. qfact(s(canonical_element, x), y)
+  = times(qfact(x, s(canonical_element, x)), y)	%(Ax_qfacttimessucc:p:2)%	%priority(2)%	 %%id:5	eqClass: 5
+	forall x : Nat . not s(canonical_element, x) = zero	%(Ax_succNotZero:p:8)%	%priority(8)%	 %%id:6	eqClass: 6
+	forall x : Nat . plus(zero, x) = x	%(Ax-zeroPlusEqual:p:5)%	%priority(5)%	 %%id:7	eqClass: 7
+	forall x, y : Nat
+. times(s(canonical_element, x), y) = plus(y, times(x, y))	%(Ax-timesPlusRel:p:3)%	%priority(3)%	 %%id:8	eqClass: 8
+	forall x, y : Nat . times(fact(x), y) = qfact(x, y)	%(Ax-heurekaLemmaNat:p:20)%	%priority(20)%	 %%id:9	eqClass: 9
+	forall x : Nat . fact(x) = qfact(x, zero)	%(targetTheorem_Nat:p:20)%	%priority(20)%	 %%id:10	eqClass: 10
+end
+
+view NatSuc_gen_1ToNatSuc : NatSuc_gen_1 to NatSuc =  El |-> Element end 
+
+spec NatSuc_gen_2 = 
+	 sort El	%%prio:17
+	 sort L	%%prio:16
+		 op canonical_element : El	%%prio:1
+		 op fact : L -> L	%%prio:10
+		 op plus : L * L -> L	%%prio:6
+		 op qfact : L * L -> L	%%prio:10
+		 op s : El * L -> L	%%prio:14
+		 op times : L * L -> L	%%prio:13
+		 op zero : L	%%prio:15
+
+	forall x : L . times(zero, x) = zero	%(Ax-multizerozero:p:2)%	%priority(2)%	 %%id:0	eqClass: 0
+	forall x : L . qfact(zero, x) = x	%(Ax-qfactzerozero:p:9)%	%priority(9)%	 %%id:1	eqClass: 1
+	forall x, y : L
+. plus(s(canonical_element, x), y)
+  = s(canonical_element, plus(x, y))	%(Ax-plusSucc:p:3)%	%priority(3)%	 %%id:2	eqClass: 2
+	. fact(zero) = s(canonical_element, zero)	%(Ax-factZeroSuccZero:p:4)%	%priority(4)%	 %%id:3	eqClass: 3
+	forall x : L
+. fact(s(canonical_element, x))
+  = times(fact(x), s(canonical_element, x))	%(Ax_multiplyNumberWithFactorial:p:1)%	%priority(1)%	 %%id:4	eqClass: 4
+	forall x, y : L
+. qfact(s(canonical_element, x), y)
+  = times(qfact(x, s(canonical_element, x)), y)	%(Ax_qfacttimessucc:p:2)%	%priority(2)%	 %%id:5	eqClass: 5
+	forall x : L . not s(canonical_element, x) = zero	%(Ax_succNotZero:p:8)%	%priority(8)%	 %%id:6	eqClass: 6
+	forall x : L . plus(zero, x) = x	%(Ax-zeroPlusEqual:p:5)%	%priority(5)%	 %%id:7	eqClass: 7
+	forall x, y : L
+. times(s(canonical_element, x), y) = plus(y, times(x, y))	%(Ax-timesPlusRel:p:3)%	%priority(3)%	 %%id:8	eqClass: 8
+	forall x, y : L . times(fact(x), y) = qfact(x, y)	%(Ax-heurekaLemmaNat:p:20)%	%priority(20)%	 %%id:9	eqClass: 9
+	forall x : L . fact(x) = qfact(x, zero)	%(targetTheorem_Nat:p:20)%	%priority(20)%	 %%id:10	eqClass: 10
+end
+
+view NatSuc_gen_2ToNatSuc_gen_1 : NatSuc_gen_2 to NatSuc_gen_1 =  L |-> Nat end 
+
+spec NatSuc_gen_3 = 
+	 sort El	%%prio:17
+	 sort L	%%prio:16
+		 op canonical_element : El	%%prio:1
+		 op fact : L -> L	%%prio:10
+		 op plus : L * L -> L	%%prio:6
+		 op qfact : L * L -> L	%%prio:10
+		 op s : El * L -> L	%%prio:14
+		 op times : L * L -> L	%%prio:13
+		 op nil : L	%%prio:15
+
+	forall x : L . times(nil, x) = nil	%(Ax-multizerozero:p:2)%	%priority(2)%	 %%id:0	eqClass: 0
+	forall x : L . qfact(nil, x) = x	%(Ax-qfactzerozero:p:9)%	%priority(9)%	 %%id:1	eqClass: 1
+	forall x, y : L
+. plus(s(canonical_element, x), y)
+  = s(canonical_element, plus(x, y))	%(Ax-plusSucc:p:3)%	%priority(3)%	 %%id:2	eqClass: 2
+	. fact(nil) = s(canonical_element, nil)	%(Ax-factZeroSuccZero:p:4)%	%priority(4)%	 %%id:3	eqClass: 3
+	forall x : L
+. fact(s(canonical_element, x))
+  = times(fact(x), s(canonical_element, x))	%(Ax_multiplyNumberWithFactorial:p:1)%	%priority(1)%	 %%id:4	eqClass: 4
+	forall x, y : L
+. qfact(s(canonical_element, x), y)
+  = times(qfact(x, s(canonical_element, x)), y)	%(Ax_qfacttimessucc:p:2)%	%priority(2)%	 %%id:5	eqClass: 5
+	forall x : L . not s(canonical_element, x) = nil	%(Ax_succNotZero:p:8)%	%priority(8)%	 %%id:6	eqClass: 6
+	forall x : L . plus(nil, x) = x	%(Ax-zeroPlusEqual:p:5)%	%priority(5)%	 %%id:7	eqClass: 7
+	forall x, y : L
+. times(s(canonical_element, x), y) = plus(y, times(x, y))	%(Ax-timesPlusRel:p:3)%	%priority(3)%	 %%id:8	eqClass: 8
+	forall x, y : L . times(fact(x), y) = qfact(x, y)	%(Ax-heurekaLemmaNat:p:20)%	%priority(20)%	 %%id:9	eqClass: 9
+	forall x : L . fact(x) = qfact(x, nil)	%(targetTheorem_Nat:p:20)%	%priority(20)%	 %%id:10	eqClass: 10
+end
+
+view NatSuc_gen_3ToNatSuc_gen_2 : NatSuc_gen_3 to NatSuc_gen_2 =  nil |-> zero end 
+
+spec NatSuc_gen_4 = 
+	 sort El	%%prio:17
+	 sort L	%%prio:16
+		 op canonical_element : El	%%prio:1
+		 op fact : L -> L	%%prio:10
+		 op plus : L * L -> L	%%prio:6
+		 op qfact : L * L -> L	%%prio:10
+		 op times : L * L -> L	%%prio:13
+		 op nil : L	%%prio:15
+		 op cons : El * L -> L	%%prio:14
+
+	forall x : L . times(nil, x) = nil	%(Ax-multizerozero:p:2)%	%priority(2)%	 %%id:0	eqClass: 0
+	forall x : L . qfact(nil, x) = x	%(Ax-qfactzerozero:p:9)%	%priority(9)%	 %%id:1	eqClass: 1
+	forall x, y : L
+. plus(cons(canonical_element, x), y)
+  = cons(canonical_element, plus(x, y))	%(Ax-plusSucc:p:3)%	%priority(3)%	 %%id:2	eqClass: 2
+	. fact(nil) = cons(canonical_element, nil)	%(Ax-factZeroSuccZero:p:4)%	%priority(4)%	 %%id:3	eqClass: 3
+	forall x : L
+. fact(cons(canonical_element, x))
+  = times(fact(x), cons(canonical_element, x))	%(Ax_multiplyNumberWithFactorial:p:1)%	%priority(1)%	 %%id:4	eqClass: 4
+	forall x, y : L
+. qfact(cons(canonical_element, x), y)
+  = times(qfact(x, cons(canonical_element, x)), y)	%(Ax_qfacttimessucc:p:2)%	%priority(2)%	 %%id:5	eqClass: 5
+	forall x : L . not cons(canonical_element, x) = nil	%(Ax_succNotZero:p:8)%	%priority(8)%	 %%id:6	eqClass: 6
+	forall x : L . plus(nil, x) = x	%(Ax-zeroPlusEqual:p:5)%	%priority(5)%	 %%id:7	eqClass: 7
+	forall x, y : L
+. times(cons(canonical_element, x), y) = plus(y, times(x, y))	%(Ax-timesPlusRel:p:3)%	%priority(3)%	 %%id:8	eqClass: 8
+	forall x, y : L . times(fact(x), y) = qfact(x, y)	%(Ax-heurekaLemmaNat:p:20)%	%priority(20)%	 %%id:9	eqClass: 9
+	forall x : L . fact(x) = qfact(x, nil)	%(targetTheorem_Nat:p:20)%	%priority(20)%	 %%id:10	eqClass: 10
+end
+
+view NatSuc_gen_4ToNatSuc_gen_3 : NatSuc_gen_4 to NatSuc_gen_3 =  cons |-> s end 
+
+spec NatSuc_gen_5 = 
+	 sort El	%%prio:17
+	 sort L	%%prio:16
+		 op canonical_element : El	%%prio:1
+		 op fact : L -> L	%%prio:10
+		 op plus : L * L -> L	%%prio:6
+		 op qfact : L * L -> L	%%prio:10
+		 op nil : L	%%prio:15
+		 op cons : El * L -> L	%%prio:14
+		 op app : L * L -> L	%%prio:13
+
+	forall x : L . app(nil, x) = nil	%(Ax-multizerozero:p:2)%	%priority(2)%	 %%id:0	eqClass: 0
+	forall x : L . qfact(nil, x) = x	%(Ax-qfactzerozero:p:9)%	%priority(9)%	 %%id:1	eqClass: 1
+	forall x, y : L
+. plus(cons(canonical_element, x), y)
+  = cons(canonical_element, plus(x, y))	%(Ax-plusSucc:p:3)%	%priority(3)%	 %%id:2	eqClass: 2
+	. fact(nil) = cons(canonical_element, nil)	%(Ax-factZeroSuccZero:p:4)%	%priority(4)%	 %%id:3	eqClass: 3
+	forall x : L
+. fact(cons(canonical_element, x))
+  = app(fact(x), cons(canonical_element, x))	%(Ax_multiplyNumberWithFactorial:p:1)%	%priority(1)%	 %%id:4	eqClass: 4
+	forall x, y : L
+. qfact(cons(canonical_element, x), y)
+  = app(qfact(x, cons(canonical_element, x)), y)	%(Ax_qfacttimessucc:p:2)%	%priority(2)%	 %%id:5	eqClass: 5
+	forall x : L . not cons(canonical_element, x) = nil	%(Ax_succNotZero:p:8)%	%priority(8)%	 %%id:6	eqClass: 6
+	forall x : L . plus(nil, x) = x	%(Ax-zeroPlusEqual:p:5)%	%priority(5)%	 %%id:7	eqClass: 7
+	forall x, y : L
+. app(cons(canonical_element, x), y) = plus(y, app(x, y))	%(Ax-timesPlusRel:p:3)%	%priority(3)%	 %%id:8	eqClass: 8
+	forall x, y : L . app(fact(x), y) = qfact(x, y)	%(Ax-heurekaLemmaNat:p:20)%	%priority(20)%	 %%id:9	eqClass: 9
+	forall x : L . fact(x) = qfact(x, nil)	%(targetTheorem_Nat:p:20)%	%priority(20)%	 %%id:10	eqClass: 10
+end
+
+view NatSuc_gen_5ToNatSuc_gen_4 : NatSuc_gen_5 to NatSuc_gen_4 =  app |-> times end 
+
+spec NatSuc_gen_6 = 
+	 sort El	%%prio:17
+	 sort L	%%prio:16
+		 op canonical_element : El	%%prio:1
+		 op plus : L * L -> L	%%prio:6
+		 op qfact : L * L -> L	%%prio:10
+		 op nil : L	%%prio:15
+		 op cons : El * L -> L	%%prio:14
+		 op app : L * L -> L	%%prio:13
+		 op rev : L -> L	%%prio:10
+
+	forall x : L . app(nil, x) = nil	%(Ax-multizerozero:p:2)%	%priority(2)%	 %%id:0	eqClass: 0
+	forall x : L . qfact(nil, x) = x	%(Ax-qfactzerozero:p:9)%	%priority(9)%	 %%id:1	eqClass: 1
+	forall x, y : L
+. plus(cons(canonical_element, x), y)
+  = cons(canonical_element, plus(x, y))	%(Ax-plusSucc:p:3)%	%priority(3)%	 %%id:2	eqClass: 2
+	. rev(nil) = cons(canonical_element, nil)	%(Ax-factZeroSuccZero:p:4)%	%priority(4)%	 %%id:3	eqClass: 3
+	forall x : L
+. rev(cons(canonical_element, x))
+  = app(rev(x), cons(canonical_element, x))	%(Ax_multiplyNumberWithFactorial:p:1)%	%priority(1)%	 %%id:4	eqClass: 4
+	forall x, y : L
+. qfact(cons(canonical_element, x), y)
+  = app(qfact(x, cons(canonical_element, x)), y)	%(Ax_qfacttimessucc:p:2)%	%priority(2)%	 %%id:5	eqClass: 5
+	forall x : L . not cons(canonical_element, x) = nil	%(Ax_succNotZero:p:8)%	%priority(8)%	 %%id:6	eqClass: 6
+	forall x : L . plus(nil, x) = x	%(Ax-zeroPlusEqual:p:5)%	%priority(5)%	 %%id:7	eqClass: 7
+	forall x, y : L
+. app(cons(canonical_element, x), y) = plus(y, app(x, y))	%(Ax-timesPlusRel:p:3)%	%priority(3)%	 %%id:8	eqClass: 8
+	forall x, y : L . app(rev(x), y) = qfact(x, y)	%(Ax-heurekaLemmaNat:p:20)%	%priority(20)%	 %%id:9	eqClass: 9
+	forall x : L . rev(x) = qfact(x, nil)	%(targetTheorem_Nat:p:20)%	%priority(20)%	 %%id:10	eqClass: 10
+end
+
+view NatSuc_gen_6ToNatSuc_gen_5 : NatSuc_gen_6 to NatSuc_gen_5 =  rev |-> fact end 
+
+spec NatSuc_gen_7 = 
+	 sort El	%%prio:17
+	 sort L	%%prio:16
+		 op canonical_element : El	%%prio:1
+		 op plus : L * L -> L	%%prio:6
+		 op nil : L	%%prio:15
+		 op cons : El * L -> L	%%prio:14
+		 op app : L * L -> L	%%prio:13
+		 op rev : L -> L	%%prio:10
+		 op qrev : L * L -> L	%%prio:10
+
+	forall x : L . app(nil, x) = nil	%(Ax-multizerozero:p:2)%	%priority(2)%	 %%id:0	eqClass: 0
+	forall x : L . qrev(nil, x) = x	%(Ax-qfactzerozero:p:9)%	%priority(9)%	 %%id:1	eqClass: 1
+	forall x, y : L
+. plus(cons(canonical_element, x), y)
+  = cons(canonical_element, plus(x, y))	%(Ax-plusSucc:p:3)%	%priority(3)%	 %%id:2	eqClass: 2
+	. rev(nil) = cons(canonical_element, nil)	%(Ax-factZeroSuccZero:p:4)%	%priority(4)%	 %%id:3	eqClass: 3
+	forall x : L
+. rev(cons(canonical_element, x))
+  = app(rev(x), cons(canonical_element, x))	%(Ax_multiplyNumberWithFactorial:p:1)%	%priority(1)%	 %%id:4	eqClass: 4
+	forall x, y : L
+. qrev(cons(canonical_element, x), y)
+  = app(qrev(x, cons(canonical_element, x)), y)	%(Ax_qfacttimessucc:p:2)%	%priority(2)%	 %%id:5	eqClass: 5
+	forall x : L . not cons(canonical_element, x) = nil	%(Ax_succNotZero:p:8)%	%priority(8)%	 %%id:6	eqClass: 6
+	forall x : L . plus(nil, x) = x	%(Ax-zeroPlusEqual:p:5)%	%priority(5)%	 %%id:7	eqClass: 7
+	forall x, y : L
+. app(cons(canonical_element, x), y) = plus(y, app(x, y))	%(Ax-timesPlusRel:p:3)%	%priority(3)%	 %%id:8	eqClass: 8
+	forall x, y : L . app(rev(x), y) = qrev(x, y)	%(Ax-heurekaLemmaNat:p:20)%	%priority(20)%	 %%id:9	eqClass: 9
+	forall x : L . rev(x) = qrev(x, nil)	%(targetTheorem_Nat:p:20)%	%priority(20)%	 %%id:10	eqClass: 10
+end
+
+view NatSuc_gen_7ToNatSuc_gen_6 : NatSuc_gen_7 to NatSuc_gen_6 =  qrev |-> qfact end 
+
+spec NatSuc_gen_8 = 
+	 sort El	%%prio:17
+	 sort L	%%prio:16
+		 op canonical_element : El	%%prio:1
+		 op plus : L * L -> L	%%prio:6
+		 op nil : L	%%prio:15
+		 op cons : El * L -> L	%%prio:14
+		 op app : L * L -> L	%%prio:13
+		 op rev : L -> L	%%prio:10
+		 op qrev : L * L -> L	%%prio:10
+
+	forall x : L . app(nil, x) = nil	%(Ax-multizerozero:p:2)%	%priority(2)%	 %%id:0	eqClass: 0
+	forall x : L . qrev(nil, x) = x	%(Ax-qfactzerozero:p:9)%	%priority(9)%	 %%id:1	eqClass: 1
+	forall x, y : L
+. plus(cons(canonical_element, x), y)
+  = cons(canonical_element, plus(x, y))	%(Ax-plusSucc:p:3)%	%priority(3)%	 %%id:2	eqClass: 2
+	. rev(nil) = cons(canonical_element, nil)	%(Ax-factZeroSuccZero:p:4)%	%priority(4)%	 %%id:3	eqClass: 3
+	forall x, y : L
+. qrev(cons(canonical_element, x), y)
+  = app(qrev(x, cons(canonical_element, x)), y)	%(Ax_qfacttimessucc:p:2)%	%priority(2)%	 %%id:5	eqClass: 5
+	forall x : L . not cons(canonical_element, x) = nil	%(Ax_succNotZero:p:8)%	%priority(8)%	 %%id:6	eqClass: 6
+	forall x : L . plus(nil, x) = x	%(Ax-zeroPlusEqual:p:5)%	%priority(5)%	 %%id:7	eqClass: 7
+	forall x, y : L
+. app(cons(canonical_element, x), y) = plus(y, app(x, y))	%(Ax-timesPlusRel:p:3)%	%priority(3)%	 %%id:8	eqClass: 8
+	forall x, y : L . app(rev(x), y) = qrev(x, y)	%(Ax-heurekaLemmaNat:p:20)%	%priority(20)%	 %%id:9	eqClass: 9
+	forall x : L . rev(x) = qrev(x, nil)	%(targetTheorem_Nat:p:20)%	%priority(20)%	 %%id:10	eqClass: 10
+end
+
+view NatSuc_gen_8ToNatSuc_gen_7 : NatSuc_gen_8 to NatSuc_gen_7 end 
+
+spec NatSuc_gen_9 = 
+	 sort El	%%prio:17
+	 sort L	%%prio:16
+		 op canonical_element : El	%%prio:1
+		 op plus : L * L -> L	%%prio:6
+		 op nil : L	%%prio:15
+		 op cons : El * L -> L	%%prio:14
+		 op app : L * L -> L	%%prio:13
+		 op rev : L -> L	%%prio:10
+		 op qrev : L * L -> L	%%prio:10
+
+	forall x : L . app(nil, x) = nil	%(Ax-multizerozero:p:2)%	%priority(2)%	 %%id:0	eqClass: 0
+	forall x : L . qrev(nil, x) = x	%(Ax-qfactzerozero:p:9)%	%priority(9)%	 %%id:1	eqClass: 1
+	forall x, y : L
+. plus(cons(canonical_element, x), y)
+  = cons(canonical_element, plus(x, y))	%(Ax-plusSucc:p:3)%	%priority(3)%	 %%id:2	eqClass: 2
+	. rev(nil) = cons(canonical_element, nil)	%(Ax-factZeroSuccZero:p:4)%	%priority(4)%	 %%id:3	eqClass: 3
+	forall x : L . not cons(canonical_element, x) = nil	%(Ax_succNotZero:p:8)%	%priority(8)%	 %%id:6	eqClass: 6
+	forall x : L . plus(nil, x) = x	%(Ax-zeroPlusEqual:p:5)%	%priority(5)%	 %%id:7	eqClass: 7
+	forall x, y : L
+. app(cons(canonical_element, x), y) = plus(y, app(x, y))	%(Ax-timesPlusRel:p:3)%	%priority(3)%	 %%id:8	eqClass: 8
+	forall x, y : L . app(rev(x), y) = qrev(x, y)	%(Ax-heurekaLemmaNat:p:20)%	%priority(20)%	 %%id:9	eqClass: 9
+	forall x : L . rev(x) = qrev(x, nil)	%(targetTheorem_Nat:p:20)%	%priority(20)%	 %%id:10	eqClass: 10
+end
+
+view NatSuc_gen_9ToNatSuc_gen_8 : NatSuc_gen_9 to NatSuc_gen_8 end 
+
+spec NatSuc_gen_10 = 
+	 sort El	%%prio:17
+	 sort L	%%prio:16
+		 op canonical_element : El	%%prio:1
+		 op plus : L * L -> L	%%prio:6
+		 op nil : L	%%prio:15
+		 op cons : El * L -> L	%%prio:14
+		 op app : L * L -> L	%%prio:13
+		 op rev : L -> L	%%prio:10
+		 op qrev : L * L -> L	%%prio:10
+
+	forall x : L . qrev(nil, x) = x	%(Ax-qfactzerozero:p:9)%	%priority(9)%	 %%id:1	eqClass: 1
+	forall x, y : L
+. plus(cons(canonical_element, x), y)
+  = cons(canonical_element, plus(x, y))	%(Ax-plusSucc:p:3)%	%priority(3)%	 %%id:2	eqClass: 2
+	. rev(nil) = cons(canonical_element, nil)	%(Ax-factZeroSuccZero:p:4)%	%priority(4)%	 %%id:3	eqClass: 3
+	forall x : L . not cons(canonical_element, x) = nil	%(Ax_succNotZero:p:8)%	%priority(8)%	 %%id:6	eqClass: 6
+	forall x : L . plus(nil, x) = x	%(Ax-zeroPlusEqual:p:5)%	%priority(5)%	 %%id:7	eqClass: 7
+	forall x, y : L
+. app(cons(canonical_element, x), y) = plus(y, app(x, y))	%(Ax-timesPlusRel:p:3)%	%priority(3)%	 %%id:8	eqClass: 8
+	forall x, y : L . app(rev(x), y) = qrev(x, y)	%(Ax-heurekaLemmaNat:p:20)%	%priority(20)%	 %%id:9	eqClass: 9
+	forall x : L . rev(x) = qrev(x, nil)	%(targetTheorem_Nat:p:20)%	%priority(20)%	 %%id:10	eqClass: 10
+end
+
+view NatSuc_gen_10ToNatSuc_gen_9 : NatSuc_gen_10 to NatSuc_gen_9 end 
+
+spec NatSuc_gen_11 = 
+	 sort El	%%prio:17
+	 sort L	%%prio:16
+		 op canonical_element : El	%%prio:1
+		 op plus : L * L -> L	%%prio:6
+		 op nil : L	%%prio:15
+		 op cons : El * L -> L	%%prio:14
+		 op app : L * L -> L	%%prio:13
+		 op rev : L -> L	%%prio:10
+		 op qrev : L * L -> L	%%prio:10
+
+	forall x : L . qrev(nil, x) = x	%(Ax-qfactzerozero:p:9)%	%priority(9)%	 %%id:1	eqClass: 1
+	. rev(nil) = cons(canonical_element, nil)	%(Ax-factZeroSuccZero:p:4)%	%priority(4)%	 %%id:3	eqClass: 3
+	forall x : L . not cons(canonical_element, x) = nil	%(Ax_succNotZero:p:8)%	%priority(8)%	 %%id:6	eqClass: 6
+	forall x : L . plus(nil, x) = x	%(Ax-zeroPlusEqual:p:5)%	%priority(5)%	 %%id:7	eqClass: 7
+	forall x, y : L
+. app(cons(canonical_element, x), y) = plus(y, app(x, y))	%(Ax-timesPlusRel:p:3)%	%priority(3)%	 %%id:8	eqClass: 8
+	forall x, y : L . app(rev(x), y) = qrev(x, y)	%(Ax-heurekaLemmaNat:p:20)%	%priority(20)%	 %%id:9	eqClass: 9
+	forall x : L . rev(x) = qrev(x, nil)	%(targetTheorem_Nat:p:20)%	%priority(20)%	 %%id:10	eqClass: 10
+end
+
+view NatSuc_gen_11ToNatSuc_gen_10 : NatSuc_gen_11 to NatSuc_gen_10 end 
+
+spec NatSuc_gen_12 = 
+	 sort El	%%prio:17
+	 sort L	%%prio:16
+		 op canonical_element : El	%%prio:1
+		 op plus : L * L -> L	%%prio:6
+		 op nil : L	%%prio:15
+		 op cons : El * L -> L	%%prio:14
+		 op app : L * L -> L	%%prio:13
+		 op rev : L -> L	%%prio:10
+		 op qrev : L * L -> L	%%prio:10
+
+	forall x : L . qrev(nil, x) = x	%(Ax-qfactzerozero:p:9)%	%priority(9)%	 %%id:1	eqClass: 1
+	. rev(nil) = cons(canonical_element, nil)	%(Ax-factZeroSuccZero:p:4)%	%priority(4)%	 %%id:3	eqClass: 3
+	forall x : L . not cons(canonical_element, x) = nil	%(Ax_succNotZero:p:8)%	%priority(8)%	 %%id:6	eqClass: 6
+	forall x : L . plus(nil, x) = x	%(Ax-zeroPlusEqual:p:5)%	%priority(5)%	 %%id:7	eqClass: 7
+	forall x, y : L . app(rev(x), y) = qrev(x, y)	%(Ax-heurekaLemmaNat:p:20)%	%priority(20)%	 %%id:9	eqClass: 9
+	forall x : L . rev(x) = qrev(x, nil)	%(targetTheorem_Nat:p:20)%	%priority(20)%	 %%id:10	eqClass: 10
+end
+
+view NatSuc_gen_12ToNatSuc_gen_11 : NatSuc_gen_12 to NatSuc_gen_11 end 
+
+spec NatSuc_gen_13 = 
+	 sort El	%%prio:17
+	 sort L	%%prio:16
+		 op canonical_element : El	%%prio:1
+		 op plus : L * L -> L	%%prio:6
+		 op nil : L	%%prio:15
+		 op cons : El * L -> L	%%prio:14
+		 op app : L * L -> L	%%prio:13
+		 op rev : L -> L	%%prio:10
+		 op qrev : L * L -> L	%%prio:10
+
+	forall x : L . qrev(nil, x) = x	%(Ax-qfactzerozero:p:9)%	%priority(9)%	 %%id:1	eqClass: 1
+	forall x : L . not cons(canonical_element, x) = nil	%(Ax_succNotZero:p:8)%	%priority(8)%	 %%id:6	eqClass: 6
+	forall x : L . plus(nil, x) = x	%(Ax-zeroPlusEqual:p:5)%	%priority(5)%	 %%id:7	eqClass: 7
+	forall x, y : L . app(rev(x), y) = qrev(x, y)	%(Ax-heurekaLemmaNat:p:20)%	%priority(20)%	 %%id:9	eqClass: 9
+	forall x : L . rev(x) = qrev(x, nil)	%(targetTheorem_Nat:p:20)%	%priority(20)%	 %%id:10	eqClass: 10
+end
+
+view NatSuc_gen_13ToNatSuc_gen_12 : NatSuc_gen_13 to NatSuc_gen_12 end 
+
+view GenToNatSuc_gen_13 : Generic to NatSuc_gen_13 end 
+
+spec Blend = combine GenToList_gen_9,GenToNatSuc_gen_13 end
+

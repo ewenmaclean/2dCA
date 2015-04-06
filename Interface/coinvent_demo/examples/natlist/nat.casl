@@ -1,0 +1,22 @@
+spec NatSuc = SemSys then
+   sort Element
+   sort Nat   
+   op zero:Nat
+   op s: Nat -> Nat
+   op Plus: Nat * Nat -> Nat                   
+   op times : Nat * Nat -> Nat  
+   op fact: Nat -> Nat            
+   op qfact: Nat * Nat -> Nat    
+
+   forall x,y:Nat
+       . plus(0,x) = x                          %(Ax-pluszero:p:3)% 
+       . plus(s(x),y) = s(plus(x,y))            %(Ax-plussuc:p:4)% 
+       . times(zero,x) = zero                   %(Ax-timeszero:p:2)%   
+       . times(s(x),y) = plus(y,times(x,y))     %(Ax-timessuc:p:4)%      
+       . fact(0) = 1                            %(Ax-factzero:p:9)%
+       . fact(s(x)) = times(s(x),fact(c))       %(Ax-factsuc:p:9)%
+       . qfact(zero,x) = x                      %(Ax-qfactzero:p:9)%
+       . qfact(s(x),y) = qfact(x,times(s(x),y)) %(Ax-qfactsuc:p:9)%
+       . fact(x) = qfact(x,zero)                %(targetTheorem_Nat:p:20)% 
+       . times (fact(x),y) = qfact(x,y)         %(eurekalemma)%  
+end

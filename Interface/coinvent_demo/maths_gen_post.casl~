@@ -1,0 +1,14 @@
+spec Gen=
+sort Generic
+ops S: Generic
+__ gpr __: Generic * Generic -> Generic, unit S
+pred gcont: Generic * Generic
+end
+view I1: Gen to IdealsOfRing =
+Generic |-> Ideal, S |-> R,
+__ gpr __ |-> __ ** __, gcont |-> __issubsetOf__
+view I2: Gen to SimpleInt =
+Generic |-> SimpleElem, S |-> 1,
+__ gpr __ |-> __ x __, gcont |-> __ || __
+spec Colimit = combine I1, I2
+

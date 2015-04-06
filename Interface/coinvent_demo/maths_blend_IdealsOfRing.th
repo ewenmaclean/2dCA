@@ -1,0 +1,56 @@
+logic CASL.SulFOL=
+spec IdealsOfRing =
+sorts Ideal, RingElt, SubSetOfRing
+sorts Ideal < SubSetOfRing
+op 0 : RingElt
+op 1 : RingElt
+op R : Ideal
+op __*__ : RingElt * RingElt -> RingElt
+op __**__ : Ideal * Ideal -> Ideal
+op __+__ : RingElt * RingElt -> RingElt
+pred IsIdeal : SubSetOfRing
+pred __isIn__ : RingElt * SubSetOfRing
+pred __issubsetOf__ : Ideal * Ideal
+
+forall I : SubSetOfRing . I in Ideal <=> IsIdeal(I) %(Ax1)%
+
+forall x : Ideal . x ** R = x %(ga_right_unit___**__)%
+
+forall x : Ideal . R ** x = x %(ga_left_unit___**__)%
+
+forall A, B : Ideal
+. A issubsetOf B <=> forall a : RingElt . a isIn A => a isIn B
+                                                           %(Ax4)%
+
+forall x, y : RingElt . x + y = y + x %(Ax5)%
+
+forall x, y, z : RingElt . (x + y) + z = x + (y + z) %(Ax6)%
+
+forall x : RingElt . x + 0 = x /\ 0 + x = x %(Ax7)%
+
+forall x : RingElt . exists x' : RingElt . x' + x = 0 %(Ax8)%
+
+forall x, y : RingElt . x * y = y * x %(Ax9)%
+
+forall x, y, z : RingElt . (x * y) * z = x * (y * z) %(Ax10)%
+
+forall x : RingElt . x * 1 = x /\ 1 * x = x %(Ax11)%
+
+forall x, y, z : RingElt . (x + y) * z = (x * z) + (y * z) %(Ax12)%
+
+forall x, y, z : RingElt . z * (x + y) = (z * x) + (z * y) %(Ax13)%
+
+forall I : SubSetOfRing
+. IsIdeal(I)
+  <=> forall a, b, c : RingElt
+      . ((a isIn I => a isIn R) /\ 0 isIn I)
+        /\ (a isIn I /\ c isIn R => c * a isIn I)
+        /\ (a isIn I /\ b isIn I /\ c isIn R /\ b + c = 0 => a + c isIn I)
+                                                          %(Ax14)%
+
+forall A, B : Ideal; a, b : RingElt
+. a isIn A /\ b isIn B => a * b isIn A ** B               %(Ax15)%
+
+forall A, B, D : Ideal
+. (forall a, b : RingElt . a isIn A /\ b isIn B => a * b isIn D)
+  => A ** B issubsetOf D                                  %(Ax16)%

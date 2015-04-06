@@ -1,0 +1,23 @@
+spec List = SemSys then
+  sort L
+  sort El
+     op nil : L                 %% maps to zero   / null
+     op cons : El*L -> L        %% maps to s      / constructor
+     op app : L * L -> L        %% maps to times  / auxfunc
+     op rev : L -> L            %% maps to fact   / recfunc
+     op qrev : L * L -> L       %% maps to qfact  / qrecfunc
+     %% op h : El                  %% maps to canonical_element
+     forall x,y: L, h : El
+       . app(nil,x) = x                             %(Ax-AppNilIsId:p:2)% %% remove
+       . qrev(nil,x) = x                            %(Ax-qrevnilxx:p:4)%
+       %% . app(cons(h,x),y) = cons(h,app(x,y))       %% remove
+       %% . rev(nil) = nil                            %% remove
+       %% . rev(cons(h,x)) = app(rev(x),cons(h,nil))  %% remove -- This is similar to axiom (Ax_multiplyNumberWithFactorial), but can not be mapped because it contains nil in the last element of its rhs, not x       
+       %% . qrev(cons(h,x),y) = qrev(x,cons(h,y))     %% remove
+       . not (cons(h,x) = nil)                      %(Ax_consNotNil:p:3)%
+       %% . app(rev(x),y) = qrev(x,y) %(Ax-heurekaLemmaLists:p:20)% %% This is the eureka lemma that we want to have for lists.
+       . rev(x) = qrev(x,nil)      %(Ax-targetTheoremLists:p:20)% %% This is the target theorem of that we know it's correct for naturals, and that we want to "translate" to the theory of lists.
+
+       %% This is our dummy lemma to set priorities of operators, predicats and sorts
+     . prioDummyOp = prioDummyOp %(El:p:17--L:p:16--nil:p:15--cons:p:14--app:p:13--rev:p:10--qrev:p:10--h:p:10)%
+end

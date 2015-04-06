@@ -1,0 +1,17 @@
+spec SimpleInt=
+sort SimpleElem
+ops 1: SimpleElem
+__ x __: SimpleElem * SimpleElem -> SimpleElem, unit 1
+preds __ || __: SimpleElem * SimpleElem
+IsPrime : SimpleElem
+%Def_upsidedownDivisilityRelation%
+forall x,y: SimpleElem
+. x || y <=> (exists c: SimpleElem. x = y x c)
+%% subsort of primes
+sort SimplePrime = { p : SimpleElem . IsPrime(p) }
+forall p:SimpleElem .
+IsPrime(p) <=>
+(forall a,b: SimpleElem
+. a x b || p => a || p \/ b || p %Def_primality%
+/\ not (p = 1))
+end

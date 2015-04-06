@@ -1,0 +1,76 @@
+logic CASL
+
+spec IdealsOfRing =
+sort RingElt %% sort of Ring Elements
+sort SubSetOfRing %% sort of parts of this ring
+pred IsIdeal : SubSetOfRing %% when a subset is an ideal
+op 0 : RingElt
+op 1 : RingElt
+op __*__ : RingElt * RingElt -> RingElt
+op __+__ : RingElt * RingElt -> RingElt
+pred __isIn__ : RingElt * SubSetOfRing
+sort Ideal = { I : SubSetOfRing . IsIdeal(I) }
+op R : Ideal %% the Ring as an ideal
+op __ ** __: Ideal * Ideal -> Ideal, unit R
+%%Definition of the predicate of contention
+pred __issubsetOf__ : Ideal * Ideal
+forall A,B : Ideal
+. A issubsetOf B <=> forall a: RingElt. a isIn A => a isIn B
+%% axiomatization of a commutative Ring with unity
+forall x : RingElt; y : RingElt . x + y = y + x
+forall x : RingElt; y : RingElt; z : RingElt
+. (x + y) + z = x + (y + z)
+forall x : RingElt . x + 0 = x /\ 0 + x = x
+forall x : RingElt . exists x' : RingElt . x' + x = 0
+forall x : RingElt; y : RingElt . x * y = y * x
+forall x : RingElt; y : RingElt; z : RingElt
+. (x * y) * z = x * (y * z)
+forall x : RingElt . x * 1 = x /\ 1 * x = x
+forall x, y, z : RingElt . (x + y) * z = (x * z) + (y * z)
+forall x, y, z : RingElt . z * (x + y) = (z * x) + (z * y)
+%%axioms for Ideal
+forall I: SubSetOfRing. IsIdeal(I) <=>
+( forall a,b,c : RingElt
+.( (a isIn I => a isIn R)
+/\ 0 isIn I)
+/\ (a isIn I /\ c isIn R => (c * a) isIn I)
+/\ (a isIn I /\ b isIn I /\ c isIn R
+/\ b + c = 0 => a + c isIn I ))
+%% Definition of the product of ideals without subindexes
+forall A,B: Ideal
+. forall a,b: RingElt. (a isIn A /\ b isIn B) => a*b isIn A**B
+. forall D: Ideal. (forall a,b: RingElt
+. (a isIn A /\ b isIn B) => a*b isIn D)
+=> A**B issubsetOf D
+end
+spec SimpleInt=
+sort SimpleElem
+ops 1: SimpleElem
+__ x __: SimpleElem * SimpleElem -> SimpleElem, unit 1
+preds __ || __: SimpleElem * SimpleElem
+IsPrime : SimpleElem
+%Def_upsidedownDivisilityRelation%
+forall x,y: SimpleElem
+. x || y <=> (exists c: SimpleElem. x = y x c)
+%% subsort of primes
+sort SimplePrime = { p : SimpleElem . IsPrime(p) }
+forall p:SimpleElem .
+IsPrime(p) <=>
+(forall a,b: SimpleElem
+. a x b || p => a || p \/ b || p %Def_primality%
+/\ not (p = 1))
+end
+spec Gen=
+sort Generic
+ops S: Generic
+__ gpr __: Generic * Generic -> Generic, unit S
+pred gcont: Generic * Generic
+end
+view I1: Gen to IdealsOfRing =
+Generic |-> Ideal, S |-> R,
+__ gpr __ |-> __ ** __, gcont |-> __issubsetOf__
+view I2: Gen to SimpleInt =
+Generic |-> SimpleElem, S |-> 1,
+__ gpr __ |-> __ x __, gcont |-> __ || __
+spec Blend = combine I1, I2
+

@@ -1,0 +1,68 @@
+logic CASL.SulFOL=
+spec Blend =
+sorts Generic, RingElt, SimplePrime, SubSetOfRing
+sorts SimplePrime < Generic; Generic < SubSetOfRing
+op 0 : RingElt
+op 1 : RingElt
+op S : Generic
+op __*__ : RingElt * RingElt -> RingElt
+op __+__ : RingElt * RingElt -> RingElt
+op __x__ : Generic * Generic -> Generic
+pred IsIdeal : SubSetOfRing
+pred IsPrime : Generic
+pred __isIn__ : RingElt * SubSetOfRing
+pred gcont : Generic * Generic
+
+forall I : SubSetOfRing . I in Generic <=> IsIdeal(I) %(Ax1)%
+
+forall x : Generic . x x S = x %(ga_right_unit___**__)%
+
+forall x : Generic . S x x = x %(ga_left_unit___**__)%
+
+forall A, B : Generic
+. gcont(A, B) <=> forall a : RingElt . a isIn A => a isIn B
+                                                           %(Ax4)%
+
+forall x, y : RingElt . x + y = y + x %(Ax5)%
+
+forall x, y, z : RingElt . (x + y) + z = x + (y + z) %(Ax6)%
+
+forall x : RingElt . x + 0 = x /\ 0 + x = x %(Ax7)%
+
+forall x : RingElt . exists x' : RingElt . x' + x = 0 %(Ax8)%
+
+forall x, y : RingElt . x * y = y * x %(Ax9)%
+
+forall x, y, z : RingElt . (x * y) * z = x * (y * z) %(Ax10)%
+
+forall x : RingElt . x * 1 = x /\ 1 * x = x %(Ax11)%
+
+forall x, y, z : RingElt . (x + y) * z = (x * z) + (y * z) %(Ax12)%
+
+forall x, y, z : RingElt . z * (x + y) = (z * x) + (z * y) %(Ax13)%
+
+forall I : SubSetOfRing
+. IsIdeal(I)
+  <=> forall a, b, c : RingElt
+      . ((a isIn I => a isIn S) /\ 0 isIn I)
+        /\ (a isIn I /\ c isIn S => c * a isIn I)
+        /\ (a isIn I /\ b isIn I /\ c isIn S /\ b + c = 0 => a + c isIn I)
+                                                          %(Ax14)%
+
+forall A, B : Generic; a, b : RingElt
+. a isIn A /\ b isIn B => a * b isIn A x B                %(Ax15)%
+
+forall A, B, D : Generic
+. (forall a, b : RingElt . a isIn A /\ b isIn B => a * b isIn D)
+  => gcont(A x B, D)                                      %(Ax16)%
+
+forall x, y : Generic
+. gcont(x, y) <=> exists c : Generic . x = y x c           %(Ax3)%
+
+forall p : Generic . p in SimplePrime <=> IsPrime(p) %(Ax4_17)%
+
+forall p : Generic
+. IsPrime(p)
+  <=> (forall a, b : Generic
+       . gcont(a x b, p) => gcont(a, p) \/ gcont(b, p))
+      /\ not p = S                                      %(Ax5_18)%

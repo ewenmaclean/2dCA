@@ -53,11 +53,12 @@ rule token = parse
   | ':'             { COLON }
   | ','             { COMMA }
   | '%'             { PERCENT }
-  | '.'             { DOT }
+  | '.'             { rem lexbuf;token lexbuf }
   | eof             { EOF }
   | ident {let s = Lexing.lexeme lexbuf in
                           try List.assoc s keyword_al
                           with Not_found -> IDENT(s)}
+  | _ {rem lexbuf;token lexbuf}
 
 and comment = parse
   | "%%" {comment lexbuf}
