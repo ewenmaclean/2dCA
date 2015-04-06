@@ -1,0 +1,8 @@
+spec inv = 
+  sort A
+  op binop: A * A -> A
+  op e:A
+  op inv:A -> A
+  forall x:A
+    . binop(x,inv(x)) = e
+end

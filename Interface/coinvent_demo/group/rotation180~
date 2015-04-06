@@ -1,0 +1,21 @@
+spec Rotation180 =
+  sorts Elem,Size
+
+  preds 
+    left: Elem
+    right: Elem    
+
+  %[sort Size = {x:Elem. right(x)}]%
+
+  ops 
+    origin: Elem
+    rotate: Elem * Elem -> Elem
+    size: Elem -> Size
+ forall x:Elem
+    . left(x) <=> right(rotate(origin,x)) 
+    . size(rotate(origin,x)) = size(x) 
+    . rotate(origin,origin) = origin
+    . (not left(origin)) /\ (not right(origin))
+    . (not (x=origin)) => not (left(x) /\ right(x))
+    . not (x=origin) => (left(x) \/ right(x))
+end

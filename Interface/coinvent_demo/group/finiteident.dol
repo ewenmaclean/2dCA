@@ -1,0 +1,8 @@
+spec finiteident = 
+  sort A
+  op binop: A*A -> A
+  op e:A
+  forall x:A 
+   . binop(x,e) = x
+   . exists y:A . binop(x,y) = e
+end

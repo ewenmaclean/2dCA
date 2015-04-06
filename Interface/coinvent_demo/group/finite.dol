@@ -1,0 +1,6 @@
+spec finiteness = 
+  sort A
+  op binop: A*A -> A
+  forall x:A. exists y,z:A
+   . x = binop(y,z)
+end

@@ -1,0 +1,14 @@
+spec Line =
+  Magnitude with X |-> Dist then 
+  sort X 
+  preds 
+    rightof: X * X 
+    leftof: X * X
+  op 
+   distance: X * X -> Dist
+  forall x,y:X
+    . rightof(x,y) <=> leftof(y,x)
+    . (not rightof(x,x)) /\ (not leftof(x,x))
+    . distance(x,y) = distance(y,x)
+    . distance(x,x) = zerosize
+end

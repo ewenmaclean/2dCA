@@ -1,0 +1,13 @@
+spec NatSuc = 
+   sort Nat
+   ops zero:Nat
+       s: Nat -> Nat
+       __ + __: Nat * Nat -> Nat
+    forall x,y,z: Nat
+     . s(x) = y /\ s(x) = z => y = z
+     . s(x) = s(y) => x=y
+     . exists a: Nat . s(x) = a
+     . not (s(x) = zero)
+     . s(x) + y = s(x+y)
+     . zero + y = y
+end

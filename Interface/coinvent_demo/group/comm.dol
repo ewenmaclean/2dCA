@@ -1,0 +1,6 @@
+spec comm = 
+  sort A
+  op binop: A * A -> A
+  forall x,y:A
+    . binop(x,y) = binop(y,x)
+end

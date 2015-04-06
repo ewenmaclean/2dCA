@@ -1,0 +1,7 @@
+spec func = 
+  sort A
+  op f: A -> A
+  op finv: A -> A
+  forall x: A
+    . f(finv(x)) = x
+end

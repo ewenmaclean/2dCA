@@ -1,0 +1,5 @@
+
+spec binop = 
+  sort A
+  op binop: A * A -> A
+end

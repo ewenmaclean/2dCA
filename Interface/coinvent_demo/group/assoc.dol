@@ -1,0 +1,6 @@
+spec assoc = 
+  sort A 
+  op binop: A * A -> A
+  forall x,y,z:A
+    . binop(x,binop(y,z)) = binop(binop(x,y),z)
+end

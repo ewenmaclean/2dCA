@@ -1,0 +1,10 @@
+spec Magnitude = 
+  sort X
+  preds 
+    __ > __: X*X
+  ops
+    zerosize:X
+   forall x,y,z:X
+       . (not (zerosize = x)) => x > zerosize 
+       . (x > y) /\ (y > z) => (x > z)
+end

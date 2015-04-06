@@ -1,0 +1,7 @@
+spec ident = 
+  sort A
+  op binop: A * A -> A
+  op e:A
+  forall x:A
+    . binop(x,e) = x
+end

@@ -1,0 +1,13 @@
+spec Cyclicity = 
+  NatSuc then
+  sort A
+  op generator:A
+  op __ ^ __: A*Nat -> A
+  op e: A
+  op binop: A * A -> A
+  forall x,y,z:A; m:Nat
+    . binop (x, binop(y,z)) = binop(binop(x,y),z)
+    . exists n:Nat. generator ^ n = y 
+    . x ^ zero = e
+    . x ^ s(m) = binop(x,x^m)       
+end
