@@ -3,7 +3,7 @@ let path = path_home^"/coinvent_demo/"
 let locale = GtkMain.Main.init ()
 let lang_file = path^"casl.lang"
 let font_name = "Monospace 10"
-let win = GWindow.window ~allow_grow:true ~allow_shrink:true ~border_width:10 ~width:1000 ~height:800 ~title:"CoInvent" ()
+let win = GWindow.window ~allow_grow:true ~allow_shrink:true ~border_width:10 ~width:800 ~height:600 ~title:"CoInvent" ()
 let vbox1 = GPack.vbox ~packing:win#add ()
 let scrolled_window = ref (GBin.scrolled_window ~hpolicy:`AUTOMATIC ~vpolicy:`AUTOMATIC ()) 
 
@@ -22,8 +22,10 @@ let weakening = ref (GMenu.check_menu_item ())
 let weak1remax = ref (GMenu.radio_menu_item ())
 let weak1addarg = ref (GMenu.radio_menu_item ())
 let custom1 = ref (GMenu.radio_menu_item ())
+let weak1both = ref (GMenu.radio_menu_item ())
 let weak2remax = ref (GMenu.radio_menu_item ())
 let weak2addarg = ref (GMenu.radio_menu_item ())
+let weak2both = ref (GMenu.radio_menu_item ())
 let custom2 = ref (GMenu.radio_menu_item ())
 let rootnow = ref (Some 0)
 
@@ -249,6 +251,53 @@ let selection_changed (model:#GTree.model) selection =
 let call_hets s () = 
   print_endline ("hets -g "^s);
   ignore(Unix.system("hets -g "^s));()
+
+let get_coltrane () =
+  let play2 () = 
+    ignore(Unix.system("timidity "^path^"coltrane.midi"));()
+  in
+  let w = GWindow.dialog ~allow_grow:true ~allow_shrink:true ~border_width:10 ~width:750 ~height:420 ~modal:true ~title:"Chord blend result" () in
+  let bo = GButton.button ~packing:w#action_area#add  () in
+  ignore(xpm_label_box ~file:(path^"play.xpm") ~text:"play" ~packing:bo#add ());
+  ignore(GMisc.image ~file:(path^"coltrane.jpg") ~packing: w#vbox#pack ());
+  ignore(bo#connect#clicked ~callback:(play2));
+  w#show ()
+
+let musicmaths () =
+  let win2 = GWindow.window ~allow_grow:true ~allow_shrink:true ~border_width:10 ~modal:true ~width:800 ~height:600 ~title:"CoInvent" () in
+  let vbox2 = GPack.vbox ~packing:win2#add () in
+  let vp = GPack.paned `VERTICAL ~packing:vbox2#add () in
+  let vb = GPack.vbox ~packing:vp#add1 () in
+  let frame_sub = GBin.frame ~packing:vb#pack () in
+  let bbox_sub = GPack.button_box `HORIZONTAL ~border_width:15 ~layout:`SPREAD
+    ~height:50 ~child_height:20 ~child_width:50 ~spacing:20 ~packing:frame_sub#add () in
+  let button_rendersub = GButton.button ~packing:bbox_sub#add  () in
+  let button_add = GButton.button ~packing:bbox_sub#add  () in
+  let button_exit = GButton.button ~packing:bbox_sub#add  () in
+  let button_hets = GButton.button ~packing:bbox_sub#add  () in
+  let _ = xpm_label_box ~file:(path^"/coinvent.xpm") ~text:"Render" ~packing:button_rendersub#add () in
+  let _ = xpm_label_box ~file:(path^"/coinvent.xpm") ~text:"Export" ~packing:button_add#add () in
+  let _ = xpm_label_box ~file:(path^"/coinvent.xpm") ~text:"Show in HETS" ~packing:button_hets#add () in
+  let _ = xpm_label_box ~file:(path^"/coinvent.xpm") ~text:"Exit" ~packing:button_exit#add () in
+  let scrolled_winnew = (GBin.scrolled_window
+    ~hpolicy: `AUTOMATIC ~vpolicy: `AUTOMATIC ~packing:vp#add2
+     ())
+  in
+  let source_viewnew =
+  (GSourceView2.source_view
+    ~width:200 ~height:350
+    ~packing:scrolled_winnew#add 
+    ()) in
+  let _ = ignore(source_viewnew#source_buffer#set_language lang) in
+  let _ = ignore(source_viewnew#source_buffer#connect#changed ~callback:(fun () -> (rootnow := None; source_viewnew#source_buffer#add_selection_clipboard clipboard))) in
+  let s2 = path^"prog.casl" in
+  let buf = r_open_in "prog.casl" in
+  source_viewnew#buffer#set_text buf;
+  let _ = button_rendersub#connect#clicked ~callback:(get_coltrane) in
+  let _ = button_add#connect#clicked ~callback:(nothing) in
+  let _ = button_hets#connect#clicked ~callback:(call_hets s2) in
+  let _ =button_exit#connect#clicked ~callback:(win2#destroy) in
+  win2#show ()
 
 let show_new_window t () =
   let trunc s = 
@@ -488,18 +537,20 @@ let create_menu_options ~packing () =
   let file_menu = GMenu.menu ~packing () in
   let item = GMenu.menu_item ~label: "External Options" ~packing:file_menu#append () in
     ignore (item#connect#activate ~callback:options);
-  let weaken = GMenu.menu_item ~label: "Weakening" ~packing:file_menu#append () in
+  let weaken = GMenu.menu_item ~label: "Generalisation" ~packing:file_menu#append () in
   let submenuwe = GMenu.menu ~packing:weaken#set_submenu () in
-  weakening := (GMenu.check_menu_item ~label: "Use weakening" ~packing:submenuwe#append ~active:true ());
-  let weaken1 = GMenu.menu_item ~label:"Weakening Scheme 1" ~packing:submenuwe#append () in
+  weakening := (GMenu.check_menu_item ~label: "Use generalisation" ~packing:submenuwe#append ~active:true ());
+  let weaken1 = GMenu.menu_item ~label:"Generalisation Scheme 1" ~packing:submenuwe#append () in
   let subsubm1 = (GMenu.menu  ~packing:weaken1#set_submenu ()) in
   weak1remax := (GMenu.radio_menu_item ~label: "Remove axiom" ~packing:subsubm1#append ~active:true ());
   weak1addarg := (GMenu.radio_menu_item ~label: "Add/Remove argument" ~packing:subsubm1#append ~group:!weak1remax#group ~active:false ());
+  weak1both := (GMenu.radio_menu_item ~label: "Both" ~packing:subsubm1#append ~group:!weak1remax#group ~active:false ());
   custom1 := (GMenu.radio_menu_item ~label: "Custom Scheme" ~packing:subsubm1#append ~group:!weak1remax#group ~active:false ());
-  let weaken2 = GMenu.menu_item ~label:"Weakening Scheme 2" ~packing:submenuwe#append () in
+  let weaken2 = GMenu.menu_item ~label:"Generalisation Scheme 2" ~packing:submenuwe#append () in
   let subsubm2 = (GMenu.menu  ~packing:weaken2#set_submenu ()) in
   weak2remax := (GMenu.radio_menu_item ~label: "Remove axiom" ~packing:subsubm2#append ~active:true ());
   weak2addarg := (GMenu.radio_menu_item ~label: "Add/Remove argument" ~packing:subsubm2#append ~group:!weak2remax#group ~active:false ());
+  weak2both := (GMenu.radio_menu_item ~label: "Both" ~packing:subsubm2#append ~group:!weak2remax#group ~active:false ());
   custom2 := (GMenu.radio_menu_item ~label: "Custom Scheme" ~packing:subsubm2#append ~group:!weak2remax#group ~active:false ());
 
   let genspace = GMenu.menu_item ~label: "Generic Space Computation" ~packing:file_menu#append () in
@@ -516,6 +567,7 @@ let create_menu_theory ~packing () =
   musicprog := (GMenu.radio_menu_item ~label: "Music (progression)" ~packing:file_menu#append ~group:!music#group ~active:false ());
   maths := (GMenu.radio_menu_item ~label: "Maths" ~packing:file_menu#append ~group:!music#group ~active:false ());
   other := (GMenu.radio_menu_item ~label: "Other" ~packing:file_menu#append ~group:!music#group ~active:true ()); 
+  let item = GMenu.menu_item ~label: "Music/Maths" ~packing:file_menu#append () in ignore (item#connect#activate ~callback:musicmaths);
   let item = GMenu.menu_item ~label: "Cellular Automata" ~packing:file_menu#append () in ignore (item#connect#activate ~callback:run2dca)
 
 let create_menu_actions ~packing () = 
@@ -539,7 +591,7 @@ let _ = button_quit#connect#clicked ~callback:(GMain.Main.quit)
 
 let _ = 
   vpain_lem_thm#set_position 450;
-  vpain_all#set_position 550;  
+  vpain_all#set_position 450;  
   ignore (win#connect#destroy (fun _ -> GMain.quit ()));
   create_menu_file ~packing:file_item#set_submenu ();
   create_menu_options ~packing:options_item#set_submenu ();

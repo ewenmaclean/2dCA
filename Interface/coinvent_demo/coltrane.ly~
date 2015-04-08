@@ -22,7 +22,7 @@ upper = \relative c' {
   \set Staff.midiInstrument = #"piano"
 %  \time 4/4
 
- <ees aes >2   <ees e g aes >2   <c ees aes >2  
+ <f aes b >2  <c e g>
 }
 
 lower = \relative c {
@@ -31,7 +31,7 @@ lower = \relative c {
   \set Staff.midiInstrument = #"piano"
 %  \time 4/4
 
- e2  c2  f2 
+ des2 c
 }
 
 \score {
