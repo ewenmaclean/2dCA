@@ -158,14 +158,14 @@ let rec get_text_from_selected b () =
   let get_window_root () = 
     let calc_markov = "0" in
     let windowroot = GWindow.window ~title:"Complete with Root" 
-      ~width:200 ~height:100 ~modal:true ~border_width:10 () in
+      ~width:300 ~height:100 ~modal:true ~border_width:10 () in
     let vbox = GPack.vbox ~packing:windowroot#add () in
     let hbox = GPack.hbox ~packing:vbox#add () in
     let radio1 = GButton.radio_button ~label:"Manual entry"
       ~active:true ~packing:hbox#add () in
     let entry = GEdit.entry ~text:"" ~max_length:2 ~packing:hbox#add () in
     let hbox2 = GPack.hbox ~packing:vbox#add () in
-    let rb = GButton.radio_button ~group:radio1#group ~label:"Use Markov Analysis"
+    let rb = GButton.radio_button ~group:radio1#group ~label:"Use GCT Algorithm"
       ~active:false ~packing:hbox2#add () in
     let but2 = GButton.button ~label:"Calculate" ~packing:hbox2#add () in
     ignore(but2#connect#clicked ~callback:(fun x -> if rb#active then (entry#set_text calc_markov) else ()));
