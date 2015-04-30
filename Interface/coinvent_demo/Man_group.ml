@@ -38,7 +38,7 @@ let vpain_man = ref (GPack.paned `HORIZONTAL ())
 
 let options () =
    let windowoptions = GWindow.window ~title:"External Options" 
-    ~width:515 ~height:230 ~modal:true ~border_width:10 () in
+    ~width:515 ~height:250 ~modal:true ~border_width:10 () in
   let vbox = GPack.vbox ~packing:windowoptions#add () in
   let hbox1 = GPack.hbox ~packing:vbox#pack () in
   let hbox2 = GPack.hbox ~packing:vbox#pack () in
@@ -47,6 +47,7 @@ let options () =
   let hbox5 = GPack.hbox ~packing:vbox#pack () in
   let hbox6 = GPack.hbox ~packing:vbox#pack () in
   let hbox7 = GPack.hbox ~packing:vbox#pack () in
+  let hbox8 = GPack.hbox ~packing:vbox#pack () in
   ignore(GMisc.label ~text:"numModels" ~packing:hbox1#add ());
   ignore(GEdit.entry ~text:"10" ~max_length:2 ~packing:hbox1#add ());
   ignore(GMisc.label ~text:"minIterationsGeneralize" ~packing:hbox2#add ());
@@ -61,6 +62,8 @@ let options () =
   ignore(GEdit.entry ~text:"2" ~max_length:2 ~packing:hbox6#add ());
   ignore(GMisc.label ~text:"HDTP results" ~packing:hbox7#add ());
   ignore(GEdit.entry ~text:"3" ~max_length:2 ~packing:hbox7#add ());
+  ignore(GMisc.label ~text:"Search Depth" ~packing:hbox8#add ());
+  ignore(GEdit.entry ~text:"3" ~max_length:2 ~packing:hbox8#add ());
   let but = GButton.button ~label:"Exit" ~packing:vbox#pack () in
   ignore(but#connect#clicked ~callback:windowoptions#destroy);
   windowoptions#show ()
@@ -176,7 +179,7 @@ let manage path () =
       GTree.cell_renderer_combo 
 	[`VISIBLE true;`TEXT_COLUMN string_col;`HAS_ENTRY false;`EDITABLE true;] in
     let view_name_col = GTree.view_column ~title:"Concept" ~renderer:name_renderer () in
-    let view_value_col = GTree.view_column ~title:"W. Scheme" ~renderer:(value_renderer,[]) () in
+    let view_value_col = GTree.view_column ~title:"Gen Scheme" ~renderer:(value_renderer,[]) () in
     let _ =
       view_value_col#add_attribute value_renderer "model" domain_col;
       view_value_col#add_attribute value_renderer "text" value_col;
